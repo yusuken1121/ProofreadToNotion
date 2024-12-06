@@ -28,6 +28,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   url: z.string().url({ message: "有効なURLを入力してください" }),
@@ -43,9 +44,29 @@ export function ArticleSummarizerForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    // ここでAPIを呼び出し、記事を要約してNotionに保存する処理を実装します
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const response = await fetch("/api/summarize", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error("要約の送信に失敗しました。");
+      }
+
+      const data = await response.json();
+      toast.success(`要約が正常に送信されました。${data}`);
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("予期せぬエラーが発生しました。");
+      }
+    }
   }
 
   return (
