@@ -60,6 +60,7 @@ const errorTypeItems = [
 export function EnglishReviseForm() {
   const [proofreadText, setProofreadText] = useState("");
   const [isProofLoading, setIsProofLoading] = useState<boolean>(false);
+  const [isSaveLoading, setIsSaveLoading] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -102,6 +103,7 @@ export function EnglishReviseForm() {
 
   async function saveToNotion() {
     try {
+      setIsSaveLoading(true);
       const response = await fetch("/api/save-to-notion", {
         method: "POST",
         headers: {
@@ -124,18 +126,18 @@ export function EnglishReviseForm() {
       } else {
         toast.error("予期せぬエラーが発生しました。");
       }
+    } finally {
+      setIsSaveLoading(false);
     }
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-6">
+    <div className="w-full container p-4 mx-auto space-y-6">
       <Card className="bg-white text-black">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">
-            英語日記添削ツール
-          </CardTitle>
+          <CardTitle className="text-2xl font-bold">英語添削ツール</CardTitle>
           <CardDescription>
-            英語で日記を書いて、AIに添削してもらいましょう
+            英語で書いて、AIに添削してもらいましょう
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -150,13 +152,11 @@ export function EnglishReviseForm() {
                     <FormControl>
                       <Textarea
                         placeholder="Write your diary entry here..."
-                        className="min-h-[200px]"
+                        className="min-h-[200px] text-xl"
                         {...field}
                       />
                     </FormControl>
-                    <FormDescription>
-                      英語で日記を書いてください
-                    </FormDescription>
+                    <FormDescription>英語で書いてください</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -288,7 +288,7 @@ export function EnglishReviseForm() {
               />
               <Button
                 type="submit"
-                className="w-full bg-primary-green hover:bg-primary-green/90 text-white"
+                className="w-full bg-primary-green hover:bg-primary-green hover:bg-opacity-80 text-white"
                 disabled={isProofLoading}
               >
                 {isProofLoading ? (
@@ -321,9 +321,16 @@ export function EnglishReviseForm() {
           </div>
           <Button
             onClick={saveToNotion}
-            className="w-full mt-4 bg-primary-green hover:bg-primary-green/90 text-white"
+            className="w-full mt-4 bg-primary-green hover:bg-primary-green text-white"
           >
-            Notionに保存
+            {isSaveLoading ? (
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" />{" "}
+                <span>処理中...</span>
+              </>
+            ) : (
+              <span>Notionに保存する</span>
+            )}
           </Button>
         </CardContent>
       </Card>
