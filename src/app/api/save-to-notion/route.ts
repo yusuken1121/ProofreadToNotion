@@ -56,13 +56,12 @@ export const POST = async (req: NextRequest) => {
             ],
           },
         },
-        // markdownToBlocksで返ってきたブロック配列を展開
+
         ...originalBlocks,
         {
           object: "block",
           type: "paragraph",
           paragraph: {
-            // text.contentには文字列を渡す必要があるので、originalTextをそのまま使います
             rich_text: [
               {
                 type: "text",

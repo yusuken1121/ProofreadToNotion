@@ -1,9 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import { generateText } from "ai";
 import { model } from "@/config/google";
 
-export const POST = async (req: NextResponse) => {
+export const POST = async (req: NextRequest) => {
   const { diaryEntry, writingStyle, errorLevel, errorTypes } = await req.json();
   const prompt = `
   以下のJSONデータに基づいて、英文を添削してください。
