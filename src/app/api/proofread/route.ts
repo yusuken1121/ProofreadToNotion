@@ -1,16 +1,10 @@
 import { NextResponse } from "next/server";
-import { Client } from "@notionhq/client";
-import { DATABASE_ID, NOTION_API_KEY, NOTION_DATABASE_ID } from "@/config/ENV";
-import { google } from "@ai-sdk/google";
+
 import { generateText } from "ai";
 import { model } from "@/config/google";
 
-const notion = new Client({ auth: NOTION_API_KEY });
-const databaseId = NOTION_DATABASE_ID;
-
-export const POST = async (req: NextResponse, res: NextResponse) => {
+export const POST = async (req: NextResponse) => {
   const { diaryEntry, writingStyle, errorLevel, errorTypes } = await req.json();
-  console.log("⭐️", diaryEntry, writingStyle, errorLevel, errorTypes);
   const prompt = `
   以下のJSONデータに基づいて、英文を添削してください。
 	•	訂正前の文章: ${diaryEntry}
