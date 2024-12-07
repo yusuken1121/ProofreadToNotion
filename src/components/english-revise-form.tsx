@@ -288,7 +288,7 @@ export function EnglishReviseForm() {
               />
               <Button
                 type="submit"
-                className="w-full bg-[#84C98B] hover:bg-[#6BAF72] text-white"
+                className="w-full bg-primary-green hover:bg-primary-green/90 text-white"
                 disabled={isProofLoading}
               >
                 {isProofLoading ? (
@@ -321,7 +321,7 @@ export function EnglishReviseForm() {
           </div>
           <Button
             onClick={saveToNotion}
-            className="w-full mt-4 bg-[#84C98B] hover:bg-[#6BAF72] text-white"
+            className="w-full mt-4 bg-primary-green hover:bg-primary-green/90 text-white"
           >
             Notionに保存
           </Button>
