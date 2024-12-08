@@ -112,6 +112,7 @@ export function EnglishReviseForm() {
         body: JSON.stringify({
           originalText: form.getValues("diaryEntry"),
           proofreadText,
+          writingStyle: form.getValues("writingStyle"),
         }),
       });
 

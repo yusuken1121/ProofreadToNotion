@@ -6,7 +6,7 @@ import { BlockObjectRequest } from "@notionhq/client/build/src/api-endpoints";
 
 export const POST = async (req: NextRequest) => {
   try {
-    const { proofreadText, originalText } = await req.json();
+    const { proofreadText, originalText, writingStyle } = await req.json();
     if (!NOTION_DATABASE_ID) {
       return NextResponse.json(
         { error: "Databaseが設定されていません。" },
@@ -28,7 +28,7 @@ export const POST = async (req: NextRequest) => {
         },
         Formality: {
           select: {
-            name: "formal",
+            name: writingStyle,
           },
         },
       },
