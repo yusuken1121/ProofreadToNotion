@@ -10,4 +10,4 @@ export const google = createGoogleGenerativeAI({
   apiKey: GEMINI_API_KEY,
 });
 
-export const model = google("gemini-1.5-pro-latest");
+export const model = google("gemini-1.5-flash");
