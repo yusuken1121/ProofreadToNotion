@@ -289,7 +289,7 @@ export function EnglishReviseForm() {
               />
               <Button
                 type="submit"
-                className="w-full bg-primary-green hover:bg-primary-green hover:bg-opacity-80 text-white"
+                className="w-full bg-green-400 hover:bg-green-400/80 hover:bg-opacity-80 text-white font-bold"
                 disabled={isProofLoading}
               >
                 {isProofLoading ? (
@@ -322,7 +322,7 @@ export function EnglishReviseForm() {
           </div>
           <Button
             onClick={saveToNotion}
-            className="w-full mt-4 bg-primary-green hover:bg-primary-green text-white"
+            className="w-full mt-4 bg-green-400 hover:bg-green-400/80 text-white font-bold"
           >
             {isSaveLoading ? (
               <>
