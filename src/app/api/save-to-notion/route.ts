@@ -58,18 +58,7 @@ export const POST = async (req: NextRequest) => {
         },
 
         ...originalBlocks,
-        {
-          object: "block",
-          type: "paragraph",
-          paragraph: {
-            rich_text: [
-              {
-                type: "text",
-                text: { content: originalText },
-              },
-            ],
-          },
-        },
+
         {
           object: "block",
           type: "heading_2",
