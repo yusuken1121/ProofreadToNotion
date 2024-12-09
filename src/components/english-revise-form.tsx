@@ -31,10 +31,11 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { useDebouncedCallback } from "use-debounce";
 
 const formSchema = z.object({
   diaryEntry: z
@@ -71,6 +72,26 @@ export function EnglishReviseForm() {
       errorTypes: ["grammar"],
     },
   });
+
+  // 打ち終わったあとあるタイミングでlocalstorageに保存する
+  const watchDiaryEntry = form.watch("diaryEntry");
+  const debounced = useDebouncedCallback((value) => {
+    localStorage.setItem("text", value);
+    toast.success("フォームデータが自動保存されました。");
+  }, 1000);
+
+  useEffect(() => {
+    debounced(watchDiaryEntry);
+  }, [watchDiaryEntry, debounced]);
+
+  //
+  useEffect(() => {
+    const savedText = localStorage.getItem("text");
+    if (savedText) {
+      form.setValue("diaryEntry", savedText);
+      toast.info("保存されたデータを読み込みました。");
+    }
+  }, [form]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsProofLoading(true);
@@ -119,7 +140,7 @@ export function EnglishReviseForm() {
       if (!response.ok) {
         throw new Error("Notionへの保存に失敗しました。");
       }
-
+      localStorage.removeItem("text");
       toast.success("Notionに保存しました。");
     } catch (error) {
       if (error instanceof Error) {
