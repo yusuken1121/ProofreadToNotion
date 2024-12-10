@@ -80,10 +80,13 @@ Step 4: Save to Notion
 
 1. POST /api/proofread
 
-- Input: Diary entry, writing style, error level, error types.
-- Output: Proofread text. 2. POST /api/save-to-notion
-- Input: Original text, proofread text, writing style.
-- Output: Confirmation of successful save to Notion.
+   - Input: Diary entry, writing style, error level, error types.
+   - Output: Proofread text.
+
+2. POST /api/save-to-notion
+
+   - Input: Original text, proofread text, writing style.
+   - Output: Confirmation of successful save to Notion.
 
 ## Known Issues 🐞
 
