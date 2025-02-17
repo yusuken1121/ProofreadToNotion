@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -27,7 +28,7 @@ import { useForm } from "react-hook-form";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { toast } from "sonner";
-import { z } from "zod";
+import { set, z } from "zod";
 
 const formSchema = z.object({
   sentence: z.string().min(2, {
@@ -39,6 +40,7 @@ const formSchema = z.object({
 const ToeicPage = () => {
   const [result, setResult] = useState<string | null>(null);
   const [resultLoading, setResultLoading] = useState(false);
+  const [saveLoading, setSaveLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -75,6 +77,37 @@ const ToeicPage = () => {
       }
     } finally {
       setResultLoading(false);
+    }
+  };
+
+  const saveToNotion = async () => {
+    setSaveLoading(true);
+    try {
+      const response = await fetch("/api/save-to-notion-toeic", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sentence: form.getValues().sentence,
+          description: result,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("送信に失敗しました。");
+      }
+
+      const data = await response.json();
+      toast.success("完了しました。");
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error(ERROR_MESSAGES.ja.FRONTEND.GENERAL.UNEXPECTED);
+      }
+    } finally {
+      setSaveLoading(false);
     }
   };
 
@@ -190,6 +223,23 @@ const ToeicPage = () => {
               )}
             </div>
           </CardContent>
+          <CardFooter>
+            <Button
+              onClick={saveToNotion}
+              className="w-full"
+              variant="green"
+              disabled={saveLoading}
+            >
+              {saveLoading ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />{" "}
+                  <span>処理中...</span>
+                </>
+              ) : (
+                <span>Notionに保存</span>
+              )}
+            </Button>
+          </CardFooter>
         </Card>
       </div>
     </main>
