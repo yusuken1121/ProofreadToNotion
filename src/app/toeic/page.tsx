@@ -137,6 +137,7 @@ const ToeicPage = () => {
                       <FormLabel>例文を挿入してください</FormLabel>
                       <FormControl>
                         <Textarea
+                          rows={10}
                           placeholder="ここに例文を入れてください"
                           {...field}
                         />
