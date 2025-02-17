@@ -343,7 +343,8 @@ export function EnglishReviseForm() {
           </div>
           <Button
             onClick={saveToNotion}
-            className="w-full mt-4 bg-green-400 hover:bg-green-400/80 text-white font-bold"
+            className="w-full mt-4"
+            variant="green"
           >
             {isSaveLoading ? (
               <>
