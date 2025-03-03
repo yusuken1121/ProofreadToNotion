@@ -61,8 +61,7 @@ const ToeicPage = () => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const handleSubmitAI = async (values: z.infer<typeof formSchema>) => {
     try {
       const response = await fetch("/api/toeic", {
         method: "POST",
@@ -91,7 +90,7 @@ const ToeicPage = () => {
     }
   };
 
-  const saveToNotion = async (values: z.infer<typeof saveFormSchema>) => {
+  const handleSaveNotion = async (values: z.infer<typeof saveFormSchema>) => {
     try {
       const response = await fetch("/api/save-to-notion-toeic", {
         method: "POST",
@@ -116,6 +115,21 @@ const ToeicPage = () => {
     }
   };
 
+  const handlePasteFromClipboard = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      form.setValue("sentence", text);
+      toast.success("クリップボードからの貼り付けに成功しました。");
+    } catch (error) {
+      toast.error("クリップボードからの貼り付けに失敗しました。");
+    }
+  };
+
+  const handleClearForm = () => {
+    form.reset();
+    setResult(null);
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
       <div className="w-full container p-4 mx-auto space-y-6">
@@ -126,12 +140,28 @@ const ToeicPage = () => {
             <CardDescription>
               入力された例文はAIによって和訳され、Notionに保存されます。
             </CardDescription>
+            <div className="flex space-x-4">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handlePasteFromClipboard}
+              >
+                貼り付け
+              </Button>
+              <Button
+                type="button"
+                variant="destructive"
+                onClick={handleClearForm}
+              >
+                フォームをクリア
+              </Button>
+            </div>
           </CardHeader>
           <CardContent>
             <Form {...form}>
               <form
                 className="flex flex-col space-y-10"
-                onSubmit={form.handleSubmit(onSubmit)}
+                onSubmit={form.handleSubmit(handleSubmitAI)}
               >
                 {/* 例文挿入 */}
                 <FormField
@@ -233,7 +263,7 @@ const ToeicPage = () => {
             <Form {...saveForm}>
               <form
                 className="w-full"
-                onSubmit={saveForm.handleSubmit(saveToNotion)}
+                onSubmit={saveForm.handleSubmit(handleSaveNotion)}
               >
                 <Button
                   type="submit"
