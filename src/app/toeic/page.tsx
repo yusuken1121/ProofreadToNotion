@@ -28,7 +28,7 @@ import { useForm } from "react-hook-form";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { toast } from "sonner";
-import { set, z } from "zod";
+import { z } from "zod";
 
 const formSchema = z.object({
   sentence: z.string().min(2, {
@@ -37,10 +37,13 @@ const formSchema = z.object({
   description_type: z.enum(["grammar", "vocabulary"]),
 });
 
+const saveFormSchema = z.object({
+  sentence: z.string(),
+  description: z.string(),
+});
+
 const ToeicPage = () => {
   const [result, setResult] = useState<string | null>(null);
-  const [resultLoading, setResultLoading] = useState(false);
-  const [saveLoading, setSaveLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -50,9 +53,16 @@ const ToeicPage = () => {
     },
   });
 
+  const saveForm = useForm<z.infer<typeof saveFormSchema>>({
+    resolver: zodResolver(saveFormSchema),
+    defaultValues: {
+      sentence: "",
+      description: "",
+    },
+  });
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
-    setResultLoading(true);
     try {
       const response = await fetch("/api/toeic", {
         method: "POST",
@@ -68,6 +78,9 @@ const ToeicPage = () => {
 
       const data = await response.json();
       setResult(data.description);
+      // Update the saveForm values when we get a new result
+      saveForm.setValue("sentence", values.sentence);
+      saveForm.setValue("description", data.description);
       toast.success("完了しました。");
     } catch (error) {
       if (error instanceof Error) {
@@ -75,30 +88,24 @@ const ToeicPage = () => {
       } else {
         toast.error(ERROR_MESSAGES.ja.FRONTEND.GENERAL.UNEXPECTED);
       }
-    } finally {
-      setResultLoading(false);
     }
   };
 
-  const saveToNotion = async () => {
-    setSaveLoading(true);
+  const saveToNotion = async (values: z.infer<typeof saveFormSchema>) => {
     try {
       const response = await fetch("/api/save-to-notion-toeic", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          sentence: form.getValues().sentence,
-          description: result,
-        }),
+        body: JSON.stringify(values),
       });
 
       if (!response.ok) {
         throw new Error("送信に失敗しました。");
       }
 
-      const data = await response.json();
+      await response.json();
       toast.success("完了しました。");
     } catch (error) {
       if (error instanceof Error) {
@@ -106,8 +113,6 @@ const ToeicPage = () => {
       } else {
         toast.error(ERROR_MESSAGES.ja.FRONTEND.GENERAL.UNEXPECTED);
       }
-    } finally {
-      setSaveLoading(false);
     }
   };
 
@@ -189,9 +194,9 @@ const ToeicPage = () => {
                 <Button
                   type="submit"
                   className="w-full bg-green-400 hover:bg-green-400/80 hover:bg-opacity-80 text-white font-bold"
-                  disabled={resultLoading}
+                  disabled={form.formState.isSubmitting}
                 >
-                  {resultLoading ? (
+                  {form.formState.isSubmitting ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />{" "}
                       <span>処理中...</span>
@@ -225,21 +230,28 @@ const ToeicPage = () => {
             </div>
           </CardContent>
           <CardFooter>
-            <Button
-              onClick={saveToNotion}
-              className="w-full"
-              variant="green"
-              disabled={saveLoading}
-            >
-              {saveLoading ? (
-                <>
-                  <Loader2 className="w-5 h-5 animate-spin" />{" "}
-                  <span>処理中...</span>
-                </>
-              ) : (
-                <span>Notionに保存</span>
-              )}
-            </Button>
+            <Form {...saveForm}>
+              <form
+                className="w-full"
+                onSubmit={saveForm.handleSubmit(saveToNotion)}
+              >
+                <Button
+                  type="submit"
+                  className="w-full"
+                  variant="green"
+                  disabled={!result || saveForm.formState.isSubmitting}
+                >
+                  {saveForm.formState.isSubmitting ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />{" "}
+                      <span>処理中...</span>
+                    </>
+                  ) : (
+                    <span>Notionに保存</span>
+                  )}
+                </Button>
+              </form>
+            </Form>
           </CardFooter>
         </Card>
       </div>
