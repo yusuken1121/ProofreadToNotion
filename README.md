@@ -1,42 +1,41 @@
-# Notion Proofread App 📝
+# Notion 英文添削アプリ 📝
 
-A powerful tool that integrates with Notion to help users revise their English writing. This application allows users to input their diary entries, receive AI-driven proofreading, and save the results directly to Notion.
+Notion と連携して英語の文章を添削するための強力なツールです。このアプリケーションでは、ユーザーが日記などのテキストを入力し、AI 駆動の添削を受け、結果を Notion に直接保存することができます。
 
-## Features ✨
+## 機能 ✨
 
-- **AI-Powered Proofreading**: Receive advanced English proofreading tailored to your preferred writing style and error level.
-- **Customizable Error Detection**: Choose specific error types like grammar, vocabulary, and usage.
-- **Auto-Save Drafts**: Automatically save your draft entries locally while writing.
-- **Save to Notion**: Seamlessly save your revised entries to your Notion workspace.
-- **Intuitive UI**: User-friendly interface with real-time feedback and error handling.
+- **AI による添削**: 選択した文章スタイルとエラーレベルに合わせた高度な英語添削。
+- **カスタマイズ可能なエラー検出**: 文法、語彙、使用法などの特定のエラータイプを選択可能。
+- **下書きの自動保存**: 入力中の文章を自動的にローカルに保存。
+- **Notion への保存**: 添削された文章をシームレスに Notion ワークスペースに保存。
+- **直感的な UI**: ユーザーフレンドリーなインターフェースでリアルタイムのフィードバックとエラー処理を提供。
 
-## Tech Stack 🛠️
+## 技術スタック 🛠️
 
-- **Frontend**: React, Next.js
-- **Form Management**: React Hook Form, Zod
-- **Styling**: TailwindCSS, shadcn
-- **Notifications**: Sonner for toast notifications
-- **Markdown Rendering**: React Markdown with GFM (GitHub Flavored Markdown)
+- **フロントエンド**: React, Next.js
+- **フォーム管理**: React Hook Form, Zod
+- **スタイリング**: TailwindCSS, shadcn
+- **通知**: Sonner（トースト通知用）
+- **マークダウンレンダリング**: React Markdown with GFM（GitHub Flavored Markdown）
 
-## Setup 🚀
+## セットアップ 🚀
 
-Follow these steps to run the application locally:
+アプリケーションをローカルで実行するには以下の手順に従ってください：
 
-1. **Clone the repository**:
+1. **リポジトリのクローン**:
 
    ```bash
    git clone https://github.com/your-username/notion-summarize.git
    cd notion-summarize
-
    ```
 
-2. Install dependencies:
+2. **依存関係のインストール**:
 
-   ```
+   ```bash
    npm install
    ```
 
-3. Create a .env.local file and add your environment variables:
+3. **.env.local ファイルを作成し、環境変数を追加**:
 
    ```
    NOTION_API_KEY=your_notion_api_key
@@ -44,57 +43,47 @@ Follow these steps to run the application locally:
    GEMINI_API_KEY=your_gemini_id
    ```
 
-4. Start the development server:
-   ```
+4. **開発サーバーの起動**:
+
+   ```bash
    npm run dev
    ```
-5. Open the app in your browser:
+
+5. **ブラウザでアプリを開く**:
    ```
    http://localhost:3000
    ```
 
-## Usage 🖥️
+## 使い方 🖥️
 
-Step 1: Write Your Entry
+**ステップ 1**: エントリーを書く
 
-- Open the app and write your diary entry in English in the text area provided.
-- The entry must be at least 10 characters long.
+- アプリを開き、提供されたテキストエリアに英語で日記エントリーを書きます。
+- エントリーは最低 10 文字以上必要です。
 
-Step 2: Customize Proofreading
+**ステップ 2**: 添削をカスタマイズ
 
-- Select your writing style (Casual, Formal, Normal).
-- Choose your desired error level (Basic, Intermediate, Advanced).
-- Specify the types of errors you want the AI to focus on (Grammar, Vocabulary, Usage).
+- 文章スタイル（カジュアル、フォーマル、ノーマル）を選択します。
+- 希望するエラーレベル（基本、中級、上級）を選択します。
+- AI に注目してほしいエラータイプ（文法、語彙、使用法）を指定します。
 
-Step 3: Submit for Proofreading
+**ステップ 3**: 添削のために送信
 
-- Click the “添削する” button to submit your entry.
-- The AI will process the entry and return a revised version.
+- 「添削する」ボタンをクリックしてエントリーを送信します。
+- AI がエントリーを処理し、修正版を返します。
 
-Step 4: Save to Notion
+**ステップ 4**: Notion に保存
 
-- Review the revised text.
-- Click the “Notion に保存する” button to save the proofread entry to your connected Notion database.
+- 修正されたテキストを確認します。
+- 「Notion に保存する」ボタンをクリックして、添削されたエントリーを連携された Notion データベースに保存します。
 
-## API Endpoints 🌐
+## API エンドポイント 🌐
 
-1. POST /api/proofread
+1. **POST /api/proofread**
 
-   - Input: Diary entry, writing style, error level, error types.
-   - Output: Proofread text.
+   - 入力: 日記エントリー、文章スタイル、エラーレベル、エラータイプ
+   - 出力: 添削されたテキスト
 
-2. POST /api/save-to-notion
-
-   - Input: Original text, proofread text, writing style.
-   - Output: Confirmation of successful save to Notion.
-
-## Known Issues 🐞
-
-- Long entries might take additional time to process.
-- Ensure that your Notion API key and database ID are correctly configured in the .env.local file.
-
-## License 📜
-
-This project is licensed under the MIT License.
-
-Feel free to modify and expand upon this template to suit your project’s specific needs!
+2. **POST /api/save-to-notion**
+   - 入力: 原文、添削されたテキスト、文章スタイル
+   - 出力: Notion への保存成功の確認
