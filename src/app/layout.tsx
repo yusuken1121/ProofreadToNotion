@@ -30,15 +30,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-100`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-100 flex flex-col min-h-screen h-full`}
       >
         <Header />
         <div className="container mx-auto p-4">
           <Breadcrumbs segments={siteLinks} />
         </div>
-        {children}
+        <main className="flex-1 flex flex-col container mx-auto p-4">
+          {children}
+        </main>
         <Toaster />
       </body>
     </html>
