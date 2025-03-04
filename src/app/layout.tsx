@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   title: "AIを活用した英語添削ツール",
   description:
     "英語の文章をより良くするための多機能な添削ツールです。文章表現（カジュアル、フォーマル、ノーマル）をカスタマイズし、誤りのレベルを調整できます。文法、語彙、使い方に焦点を当てた添削も可能。修正前と修正後の文章をNotionに保存できます。",
-  icons: "./public/icon.png",
+  icons: "./public/icon.jpg",
 };
 
 export default function RootLayout({
