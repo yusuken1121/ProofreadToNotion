@@ -2,9 +2,7 @@ import { notion } from "@/config/backend/notion";
 import { NOTION_DATABASE_TOEIC_ID } from "@/config/ENV";
 import { NextResponse } from "next/server";
 import {
-  BlockObjectResponse,
   PageObjectResponse,
-  PartialBlockObjectResponse,
   RichTextItemResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 import { ApiResponse, ToeicQuestionItem } from "@/types/Toeic.Type";
@@ -17,10 +15,6 @@ interface ToeicQuestionProperties {
   };
   // 他に必要なプロパティがあれば追加
 }
-
-// ブロックコンテンツの型を定義
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type BlockContent = any;
 
 // ページコンテンツの型を定義
 interface PageContentBlock {
@@ -38,25 +32,49 @@ export const GET = async (): Promise<NextResponse<ApiResponse>> => {
       );
     }
 
-    const response = await notion.databases.query({
-      database_id: NOTION_DATABASE_TOEIC_ID,
-      sorts: [
-        {
-          timestamp: "created_time",
-          direction: "descending",
-        },
-      ],
-    });
+    // 全てのページを保存するための配列
+    const allPages: PageObjectResponse[] = [];
+    
+    // NotionAPIから100件以上取得するためのページネーション処理
+    let hasMore = true;
+    let nextCursor: string | undefined = undefined;
+    
+    // 全てのデータを取得するまでループ
+    while (hasMore) {
+      const response = await notion.databases.query({
+        database_id: NOTION_DATABASE_TOEIC_ID,
+        sorts: [
+          {
+            timestamp: "created_time",
+            direction: "descending", // 降順（新しい順）で取得
+          },
+        ],
+        start_cursor: nextCursor,
+        page_size: 100, // 一度に取得する最大数
+      });
+      
+      // 結果を配列に追加
+      allPages.push(...(response.results as PageObjectResponse[]));
+      
+      // 次のページがあるかチェック
+      hasMore = response.has_more;
+      nextCursor = response.next_cursor ?? undefined;
+      
+      // 無限ループ防止のセーフガード（必要に応じてコメントアウト）
+      if (allPages.length > 1000) {
+        console.warn('1000件以上のデータがあります。ページネーションを中断します。');
+        hasMore = false;
+      }
+    }
 
-    // ページ一覧とページの内容を取得するための Promise 配列を作成
-    const pagePromises = response.results.map(async (page) => {
+    // 全てのページのページ詳細を取得
+    const pagePromises = allPages.map(async (page) => {
       const typedPage = page as PageObjectResponse;
+      
       // 型安全に properties にアクセスするためにキャスト
-      const properties =
-        typedPage.properties as unknown as ToeicQuestionProperties;
+      const properties = typedPage.properties as unknown as ToeicQuestionProperties;
       const sentenceProperty = properties["文章"]?.title;
-      const sentence =
-        sentenceProperty?.length > 0 ? sentenceProperty[0]?.plain_text : "";
+      const sentence = sentenceProperty?.length > 0 ? sentenceProperty[0]?.plain_text : "";
 
       // ページのブロック内容を取得
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -98,8 +116,13 @@ export const GET = async (): Promise<NextResponse<ApiResponse>> => {
 
     // 全ページの処理を並行して実行
     const pages = await Promise.all(pagePromises);
+    
+    // 日付順（新しい順）に並び替え
+    const sortedPages = pages.sort((a, b) => {
+      return new Date(b.createdTime).getTime() - new Date(a.createdTime).getTime();
+    });
 
-    return NextResponse.json({ success: true, data: pages });
+    return NextResponse.json({ success: true, data: sortedPages });
   } catch (error) {
     console.error("Notionからの取得エラー:", error);
     return NextResponse.json(
