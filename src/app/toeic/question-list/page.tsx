@@ -202,7 +202,7 @@ export default function QuestionListPage() {
           {questions.map((question) => (
             <Card key={question.id} className="flex flex-col h-full">
               <CardHeader>
-                <CardTitle className="text-lg line-clamp-2">
+                <CardTitle className="text-lg ">
                   {question.sentence || "（文章なし）"}
                 </CardTitle>
               </CardHeader>
