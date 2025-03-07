@@ -19,11 +19,15 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Separator } from "@/components/ui/separator";
+import { Checkbox } from "@/components/ui/checkbox";
+import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 export default function QuestionListPage() {
   const [questions, setQuestions] = useState<ToeicQuestionItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [pendingUpdates, setPendingUpdates] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -51,6 +55,55 @@ export default function QuestionListPage() {
 
     fetchQuestions();
   }, []);
+
+  // チェックボックスの状態を更新する関数
+  const updateCheckbox = async (pageId: string, completed: boolean) => {
+    // 更新中の状態を設定
+    setPendingUpdates((prev) => new Set(prev).add(pageId));
+
+    try {
+      const response = await fetch("/api/toeic/update-checkbox", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          pageId,
+          completed,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!data.success) {
+        throw new Error(data.error || "更新に失敗しました");
+      }
+
+      // 成功したら質問リストを更新
+      setQuestions((prevQuestions) =>
+        prevQuestions.map((q) => (q.id === pageId ? { ...q, completed } : q))
+      );
+
+      toast.success("状態を更新しました");
+    } catch (err) {
+      console.error("チェックボックス更新エラー:", err);
+      toast.error(err instanceof Error ? err.message : "更新に失敗しました");
+
+      // エラーの場合は元に戻す
+      setQuestions((prevQuestions) =>
+        prevQuestions.map((q) =>
+          q.id === pageId ? { ...q, completed: !completed } : q
+        )
+      );
+    } finally {
+      // 更新中の状態を解除
+      setPendingUpdates((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(pageId);
+        return newSet;
+      });
+    }
+  };
 
   const formatDate = (dateString: string) => {
     try {
@@ -200,9 +253,26 @@ export default function QuestionListPage() {
         // 質問リストの表示
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {questions.map((question) => (
-            <Card key={question.id} className="flex flex-col h-full">
-              <CardHeader>
-                <CardTitle className="text-lg ">
+            <Card
+              key={question.id}
+              className={cn(
+                "flex flex-col h-full transition-colors",
+                question.completed ? "border-green-200 bg-green-50/50" : ""
+              )}
+            >
+              <CardHeader className="relative pb-2">
+                <div className="absolute right-4 top-4">
+                  <Checkbox
+                    id={`checkbox-${question.id}`}
+                    checked={question.completed}
+                    disabled={pendingUpdates.has(question.id)}
+                    onCheckedChange={(checked) => {
+                      updateCheckbox(question.id, checked === true);
+                    }}
+                    aria-label="できるようになったかどうか"
+                  />
+                </div>
+                <CardTitle className="text-lg line-clamp-2 pr-8">
                   {question.sentence || "（文章なし）"}
                 </CardTitle>
               </CardHeader>
@@ -229,8 +299,13 @@ export default function QuestionListPage() {
               <CardFooter className="text-xs text-muted-foreground">
                 <div className="w-full flex flex-col gap-1">
                   <Separator />
-                  <div className="pt-1">
-                    作成日: {formatDate(question.createdTime)}
+                  <div className="pt-1 flex justify-between items-center">
+                    <div>作成日: {formatDate(question.createdTime)}</div>
+                    {question.completed && (
+                      <span className="text-green-600 font-medium">
+                        できるようになった
+                      </span>
+                    )}
                   </div>
                 </div>
               </CardFooter>

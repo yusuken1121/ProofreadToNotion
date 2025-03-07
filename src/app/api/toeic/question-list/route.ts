@@ -13,6 +13,11 @@ interface ToeicQuestionProperties {
     type: "title";
     title: Array<RichTextItemResponse>;
   };
+  できるようになった?: {
+    id: string;
+    type: "checkbox";
+    checkbox: boolean;
+  };
   // 他に必要なプロパティがあれば追加
 }
 
@@ -34,11 +39,11 @@ export const GET = async (): Promise<NextResponse<ApiResponse>> => {
 
     // 全てのページを保存するための配列
     const allPages: PageObjectResponse[] = [];
-    
+
     // NotionAPIから100件以上取得するためのページネーション処理
     let hasMore = true;
     let nextCursor: string | undefined = undefined;
-    
+
     // 全てのデータを取得するまでループ
     while (hasMore) {
       const response = await notion.databases.query({
@@ -52,17 +57,19 @@ export const GET = async (): Promise<NextResponse<ApiResponse>> => {
         start_cursor: nextCursor,
         page_size: 100, // 一度に取得する最大数
       });
-      
+
       // 結果を配列に追加
       allPages.push(...(response.results as PageObjectResponse[]));
-      
+
       // 次のページがあるかチェック
       hasMore = response.has_more;
       nextCursor = response.next_cursor ?? undefined;
-      
+
       // 無限ループ防止のセーフガード（必要に応じてコメントアウト）
       if (allPages.length > 1000) {
-        console.warn('1000件以上のデータがあります。ページネーションを中断します。');
+        console.warn(
+          "1000件以上のデータがあります。ページネーションを中断します。"
+        );
         hasMore = false;
       }
     }
@@ -70,11 +77,16 @@ export const GET = async (): Promise<NextResponse<ApiResponse>> => {
     // 全てのページのページ詳細を取得
     const pagePromises = allPages.map(async (page) => {
       const typedPage = page as PageObjectResponse;
-      
+
       // 型安全に properties にアクセスするためにキャスト
-      const properties = typedPage.properties as unknown as ToeicQuestionProperties;
+      const properties =
+        typedPage.properties as unknown as ToeicQuestionProperties;
       const sentenceProperty = properties["文章"]?.title;
-      const sentence = sentenceProperty?.length > 0 ? sentenceProperty[0]?.plain_text : "";
+      const sentence =
+        sentenceProperty?.length > 0 ? sentenceProperty[0]?.plain_text : "";
+
+      // チェックボックスの状態を取得
+      const completed = properties["できるようになった"]?.checkbox || false;
 
       // ページのブロック内容を取得
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -102,7 +114,7 @@ export const GET = async (): Promise<NextResponse<ApiResponse>> => {
         });
       } catch (err) {
         console.error(`ページID ${typedPage.id} のコンテンツ取得エラー:`, err);
-        pageContent = []; // エラー時は空の配列を設定
+        pageContent = [];
       }
 
       return {
@@ -110,16 +122,19 @@ export const GET = async (): Promise<NextResponse<ApiResponse>> => {
         sentence,
         createdTime: typedPage.created_time,
         lastEditedTime: typedPage.last_edited_time,
-        pageContent, // ページのコンテンツを追加
+        completed,
+        pageContent,
       } as ToeicQuestionItem;
     });
 
     // 全ページの処理を並行して実行
     const pages = await Promise.all(pagePromises);
-    
+
     // 日付順（新しい順）に並び替え
     const sortedPages = pages.sort((a, b) => {
-      return new Date(b.createdTime).getTime() - new Date(a.createdTime).getTime();
+      return (
+        new Date(b.createdTime).getTime() - new Date(a.createdTime).getTime()
+      );
     });
 
     return NextResponse.json({ success: true, data: sortedPages });
