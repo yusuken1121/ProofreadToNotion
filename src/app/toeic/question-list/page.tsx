@@ -35,7 +35,6 @@ export default function QuestionListPage() {
       setLoading(true);
       const response = await fetch("/api/toeic/question-list", {});
       const data = await response.json();
-      console.log("質問リスト:", data);
 
       if (!data.success) {
         throw new Error(data.error || "質問リストの取得に失敗しました");
