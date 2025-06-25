@@ -11,7 +11,7 @@ import { siteLinks } from "@/config/siteLinks";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
+    <main className="flex flex-col items-center justify-center h-full bg-gray-100">
       <div className="w-full container p-4 mx-auto space-y-6">
         <Card>
           <CardHeader>
