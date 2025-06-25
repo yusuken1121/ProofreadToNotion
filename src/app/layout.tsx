@@ -32,15 +32,15 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-100 flex flex-col min-h-screen h-full`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header />
-        <div className="container mx-auto p-4">
-          <Breadcrumbs segments={siteLinks} />
+        <div className="h-lvh grid grid-rows-[64px_64px_1fr] bg-slate-100">
+          <Header />
+          <div className="container mx-auto flex items-center p-4">
+            <Breadcrumbs segments={siteLinks} />
+          </div>
+          <main className="container mx-auto p-4">{children}</main>
         </div>
-        <main className="flex-1 flex flex-col container mx-auto p-4">
-          {children}
-        </main>
         <Toaster />
       </body>
     </html>
