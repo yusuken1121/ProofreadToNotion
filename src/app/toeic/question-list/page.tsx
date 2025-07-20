@@ -33,7 +33,9 @@ export default function QuestionListPage() {
   const fetchQuestions = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/toeic/question-list", {});
+      const response = await fetch("/api/toeic/question-list", {
+        cache: "no-cache",
+      });
       const data = await response.json();
 
       if (!data.success) {
