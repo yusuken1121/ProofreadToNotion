@@ -1,19 +1,18 @@
 "use client";
-
-import { Breadcrumbs } from "@/components/BreadCrumbs";
 import WordForm from "@/components/business-english/WordForm";
 import FlashcardGrid from "@/components/business-english/FlashcardGrid";
 import { useState, useEffect, useCallback } from "react";
 import { BusinessEnglishWord } from "@/types/BusinessEnglish.Type";
-import Header from "@/components/Header/Header";
 import EditWordModal from "@/components/business-english/EditWordModal";
 import DeleteConfirmationDialog from "@/components/business-english/DeleteConfirmationDialog";
 import { toast } from "sonner";
+import CategoryFilter from "@/components/business-english/CategoryFilter";
 
 export default function BusinessEnglishPage() {
   const [words, setWords] = useState<BusinessEnglishWord[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
   // Edit Modal State
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -35,8 +34,12 @@ export default function BusinessEnglishPage() {
       const data = await response.json();
       setWords(data);
       setError(null);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -84,19 +87,27 @@ export default function BusinessEnglishPage() {
     }
   };
 
+  const filteredWords = words.filter((word) => {
+    if (selectedCategory === "all") {
+      return true;
+    }
+    return word.category === selectedCategory;
+  });
+
   return (
     <>
       <h1 className="text-3xl font-bold my-6">ビジネス英語 単語帳</h1>
 
       <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-4">新しい単語を登録</h2>
+        <h2 className="text-2xl font-semibold mb-4">新しいフレーズを登録</h2>
         <WordForm onWordAdded={fetchWords} />
       </section>
 
       <section>
-        <h2 className="text-2xl font-semibold mb-4">単語カード</h2>
+        <h2 className="text-2xl font-semibold mb-4">フレーズカード</h2>
+        <CategoryFilter onCategoryChange={setSelectedCategory} />
         <FlashcardGrid
-          words={words}
+          words={filteredWords}
           isLoading={isLoading}
           error={error}
           onEdit={handleEditClick}
