@@ -56,7 +56,7 @@ type Properties = {
 };
 
 // 単語一覧を取得するAPI
-export const GET = async () => {
+export const GET = async (req: NextRequest) => {
   try {
     if (!NOTION_OFFSHORE_DATABASE_ID) {
       return NextResponse.json(
@@ -64,6 +64,10 @@ export const GET = async () => {
         { status: 500 }
       );
     }
+
+    const { searchParams } = new URL(req.url);
+    const startCursor = searchParams.get("start_cursor") || undefined;
+    const pageSize = Number(searchParams.get("page_size")) || 10;
 
     const response = await notion.databases.query({
       database_id: NOTION_OFFSHORE_DATABASE_ID,
@@ -73,9 +77,11 @@ export const GET = async () => {
           direction: "descending",
         },
       ],
+      start_cursor: startCursor,
+      page_size: pageSize,
     });
 
-    const responseTyped = response as unknown as { results: Page[] };
+    const responseTyped = response as unknown as { results: Page[], next_cursor: string | null, has_more: boolean };
     const words = responseTyped.results.map((page: Page) => {
       return {
         id: page.id,
@@ -85,7 +91,11 @@ export const GET = async () => {
       };
     });
 
-    return NextResponse.json(words);
+    return NextResponse.json({
+      words,
+      next_cursor: responseTyped.next_cursor,
+      has_more: responseTyped.has_more,
+    });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
