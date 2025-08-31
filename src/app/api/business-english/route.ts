@@ -1,10 +1,62 @@
-
 import { notion } from "@/config/backend/notion";
 import { NOTION_OFFSHORE_DATABASE_ID } from "@/config/ENV";
 import { NextRequest, NextResponse } from "next/server";
 
+// a type for the page object
+type Page = {
+  id: string;
+  properties: {
+    Japanese: {
+      title: {
+        text: {
+          content: string;
+        };
+      }[];
+    };
+    English: {
+      rich_text: {
+        text: {
+          content: string;
+        };
+      }[];
+    };
+    Category: {
+      select: {
+        name: string;
+      };
+    };
+  };
+};
+
+type Properties = {
+  Japanese: {
+    title: {
+      text: {
+        content: string;
+      };
+    }[];
+  };
+  English: {
+    rich_text: {
+      text: {
+        content: string;
+      };
+    }[];
+  };
+  CreatedAt?: {
+    date: {
+      start: string;
+    };
+  };
+  Category?: {
+    select: {
+      name: string;
+    };
+  };
+};
+
 // 単語一覧を取得するAPI
-export const GET = async () => {
+export const GET = async (req: NextRequest) => {
   try {
     if (!NOTION_OFFSHORE_DATABASE_ID) {
       return NextResponse.json(
@@ -12,6 +64,10 @@ export const GET = async () => {
         { status: 500 }
       );
     }
+
+    const { searchParams } = new URL(req.url);
+    const startCursor = searchParams.get("start_cursor") || undefined;
+    const pageSize = Number(searchParams.get("page_size")) || 10;
 
     const response = await notion.databases.query({
       database_id: NOTION_OFFSHORE_DATABASE_ID,
@@ -21,17 +77,25 @@ export const GET = async () => {
           direction: "descending",
         },
       ],
+      start_cursor: startCursor,
+      page_size: pageSize,
     });
 
-    const words = response.results.map((page: any) => {
+    const responseTyped = response as unknown as { results: Page[], next_cursor: string | null, has_more: boolean };
+    const words = responseTyped.results.map((page: Page) => {
       return {
         id: page.id,
         japanese: page.properties.Japanese.title[0]?.text.content || "",
         english: page.properties.English.rich_text[0]?.text.content || "",
+        category: page.properties.Category?.select?.name || "",
       };
     });
 
-    return NextResponse.json(words);
+    return NextResponse.json({
+      words,
+      next_cursor: responseTyped.next_cursor,
+      has_more: responseTyped.has_more,
+    });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
@@ -46,7 +110,7 @@ export const GET = async () => {
 // 新しい単語を追加するAPI
 export const POST = async (req: NextRequest) => {
   try {
-    const { japanese, english } = await req.json();
+    const { japanese, english, category } = await req.json();
 
     if (!japanese || !english) {
       return NextResponse.json(
@@ -62,33 +126,43 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
-    const response = await notion.pages.create({
-      parent: { database_id: NOTION_OFFSHORE_DATABASE_ID },
-      properties: {
-        Japanese: {
-          title: [
-            {
-              text: {
-                content: japanese,
-              },
+    const properties: Properties = {
+      Japanese: {
+        title: [
+          {
+            text: {
+              content: japanese,
             },
-          ],
-        },
-        English: {
-          rich_text: [
-            {
-              text: {
-                content: english,
-              },
-            },
-          ],
-        },
-        CreatedAt: {
-          date: {
-            start: new Date().toISOString(),
           },
+        ],
+      },
+      English: {
+        rich_text: [
+          {
+            text: {
+              content: english,
+            },
+          },
+        ],
+      },
+      CreatedAt: {
+        date: {
+          start: new Date().toISOString(),
         },
       },
+    };
+
+    if (category) {
+      properties.Category = {
+        select: {
+          name: category,
+        },
+      };
+    }
+
+    const response = await notion.pages.create({
+      parent: { database_id: NOTION_OFFSHORE_DATABASE_ID },
+      properties,
     });
 
     return NextResponse.json(response);
@@ -106,7 +180,7 @@ export const POST = async (req: NextRequest) => {
 // 単語を更新するAPI
 export const PUT = async (req: NextRequest) => {
   try {
-    const { id, japanese, english } = await req.json();
+    const { id, japanese, english, category } = await req.json();
 
     if (!id || !japanese || !english) {
       return NextResponse.json(
@@ -115,28 +189,38 @@ export const PUT = async (req: NextRequest) => {
       );
     }
 
+    const properties: Omit<Properties, "CreatedAt"> = {
+      Japanese: {
+        title: [
+          {
+            text: {
+              content: japanese,
+            },
+          },
+        ],
+      },
+      English: {
+        rich_text: [
+          {
+            text: {
+              content: english,
+            },
+          },
+        ],
+      },
+    };
+
+    if (category) {
+      properties.Category = {
+        select: {
+          name: category,
+        },
+      };
+    }
+
     const response = await notion.pages.update({
       page_id: id,
-      properties: {
-        Japanese: {
-          title: [
-            {
-              text: {
-                content: japanese,
-              },
-            },
-          ],
-        },
-        English: {
-          rich_text: [
-            {
-              text: {
-                content: english,
-              },
-            },
-          ],
-        },
-      },
+      properties,
     });
 
     return NextResponse.json(response);
