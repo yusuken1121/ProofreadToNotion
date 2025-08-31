@@ -131,7 +131,7 @@ const ToeicPage = () => {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
+    <main className="flex min-h-screen flex-col items-center justify-center ">
       <div className="w-full container p-4 mx-auto space-y-6">
         {/* フォーム */}
         <Card>

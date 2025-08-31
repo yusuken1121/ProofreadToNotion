@@ -19,7 +19,7 @@ const Header = () => {
   const pathname = usePathname();
 
   return (
-    <header className="h-[64px] bg-slate-700 text-white font-bold">
+    <header className="h-[64px] bg-card text-white font-bold">
       <div className="container mx-auto flex justify-between items-center h-full px-4">
         <Link href="/" className="text-xl font-bold">
           英語 × Notion

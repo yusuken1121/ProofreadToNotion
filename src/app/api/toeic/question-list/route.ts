@@ -23,9 +23,9 @@ interface ToeicQuestionProperties {
 
 // ページコンテンツの型を定義
 interface PageContentBlock {
-  type: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  content: any;
+  type: "paragraph" | "heading" | "bulleted_list_item";
+  text: string;
+  level?: 1 | 2 | 3;
 }
 
 export const GET = async (): Promise<NextResponse<ApiResponse>> => {
@@ -98,20 +98,26 @@ export const GET = async (): Promise<NextResponse<ApiResponse>> => {
 
         // ページのブロックを整形
         pageContent = pageBlocks.results.map((block) => {
-          // TypeScriptのエラーを回避するためにanyにキャスト
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const typedBlock = block as any;
-          // ブロックの型に応じたデータ変換
           const blockType = typedBlock.type;
-
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const content = typedBlock[blockType];
 
-          return {
-            type: blockType,
-            content,
-          };
-        });
+          if (blockType === "paragraph" || blockType === "heading_2" || blockType === "bulleted_list_item") {
+            const text = content.rich_text[0]?.plain_text || "";
+            if (blockType === "heading_2") {
+              return {
+                type: "heading",
+                text,
+                level: 2,
+              };
+            }
+            return {
+              type: blockType,
+              text,
+            };
+          }
+          return null;
+        }).filter((item) => item !== null) as PageContentBlock[];
       } catch (err) {
         console.error(`ページID ${typedPage.id} のコンテンツ取得エラー:`, err);
         pageContent = [];
