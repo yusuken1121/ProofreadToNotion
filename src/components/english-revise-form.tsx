@@ -155,7 +155,7 @@ export function EnglishReviseForm() {
 
   return (
     <div className="w-full container p-4 mx-auto space-y-6">
-      <Card className="bg-white text-black">
+      <Card>
         <CardHeader>
           <CardTitle className="text-2xl font-bold">英語添削ツール</CardTitle>
           <CardDescription>
@@ -327,7 +327,7 @@ export function EnglishReviseForm() {
         </CardContent>
       </Card>
 
-      <Card className="bg-white text-black">
+      <Card>
         <CardHeader>
           <CardTitle className="text-xl font-bold">添削結果</CardTitle>
         </CardHeader>
@@ -338,7 +338,7 @@ export function EnglishReviseForm() {
                 {proofreadText}
               </ReactMarkdown>
             ) : (
-              <p className="text-gray-500">添削結果がここに表示されます...</p>
+              <p>添削結果がここに表示されます...</p>
             )}
           </div>
           <Button

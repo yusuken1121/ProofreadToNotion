@@ -36,12 +36,21 @@ export const PageContent = ({ content }: { content: ContentBlock[] }) => {
 };
 
 // 各ブロックタイプごとの表示コンポーネント
-export const BlockContent = ({ block, index }: { block: ContentBlock; index: number }) => {
+export const BlockContent = ({
+  block,
+  index,
+}: {
+  block: ContentBlock;
+  index: number;
+}) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const richText = (block.content as any)?.rich_text;
+
   switch (block.type) {
     case "paragraph":
       return (
         <div className="text-sm">
-          {block.content?.rich_text?.map((text, i) => (
+          {richText?.map((text: RichText, i: number) => (
             <RichTextSpan key={i} text={text} />
           )) || "空のパラグラフ"}
         </div>
@@ -50,6 +59,7 @@ export const BlockContent = ({ block, index }: { block: ContentBlock; index: num
     case "heading_1":
     case "heading_2":
     case "heading_3":
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const headingSize: Record<string, string> = {
         heading_1: "text-xl font-bold",
         heading_2: "text-lg font-bold",
@@ -58,7 +68,7 @@ export const BlockContent = ({ block, index }: { block: ContentBlock; index: num
 
       return (
         <div className={headingSize[block.type]}>
-          {block.content?.rich_text?.map((text, i) => (
+          {richText?.map((text: RichText, i: number) => (
             <span key={i}>{text.plain_text}</span>
           )) || "見出し"}
         </div>
@@ -69,12 +79,10 @@ export const BlockContent = ({ block, index }: { block: ContentBlock; index: num
       return (
         <div className="flex">
           <span className="mr-2">
-            {block.type === "bulleted_list_item"
-              ? "•"
-              : `${index + 1}.`}
+            {block.type === "bulleted_list_item" ? "•" : `${index + 1}.`}
           </span>
           <span>
-            {block.content?.rich_text?.map((text, i) => (
+            {richText?.map((text: RichText, i: number) => (
               <span key={i}>{text.plain_text}</span>
             )) || "リストアイテム"}
           </span>
@@ -83,9 +91,7 @@ export const BlockContent = ({ block, index }: { block: ContentBlock; index: num
 
     default:
       return (
-        <div className="text-xs text-gray-500">
-          {`[${block.type}ブロック]`}
-        </div>
+        <div className="text-xs text-gray-500">{`[${block.type}ブロック]`}</div>
       );
   }
 };
