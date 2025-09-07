@@ -12,7 +12,5 @@ export interface RichText {
 
 export interface ContentBlock {
   type: string;
-  content?: {
-    rich_text?: RichText[];
-  };
+  content?: unknown;
 }
