@@ -4,4 +4,5 @@ export const siteLinks = [
   { label: "TOEIC解説", href: "/toeic" },
   { label: "TOEIC読解", href: "/toeic/question-list" },
   { label: "ビジネス英語", href: "/business-english" },
+  { label: "IELTS Debugger", href: "/ielts" },
 ];

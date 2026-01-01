@@ -10,4 +10,5 @@ export const google = createGoogleGenerativeAI({
   apiKey: GEMINI_API_KEY,
 });
 
-export const model = google("gemini-1.5-flash");
+export const model = google("gemini-2.5-flash-lite"); // Cost-effective for simple tasks
+export const modelPro = google("gemini-2.5-flash-lite"); // High reasoning for complex feedback
