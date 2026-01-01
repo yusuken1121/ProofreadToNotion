@@ -36,6 +36,7 @@ import { Loader2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useDebouncedCallback } from "use-debounce";
+import { reviseTextAction } from "@/app/_actions/proofread";
 
 const formSchema = z.object({
   diaryEntry: z
@@ -96,20 +97,13 @@ export function EnglishReviseForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsProofLoading(true);
     try {
-      const response = await fetch("/api/proofread", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
+      const text = await reviseTextAction({
+        text: values.diaryEntry,
+        writingStyle: values.writingStyle,
+        errorLevel: values.errorLevel,
+        errorTypes: values.errorTypes as any,
       });
-
-      if (!response.ok) {
-        throw new Error("添削の送信に失敗しました。");
-      }
-
-      const data = await response.json();
-      setProofreadText(data.proofreadText);
+      setProofreadText(text);
       toast.success("添削が完了しました。");
     } catch (error) {
       if (error instanceof Error) {
