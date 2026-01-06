@@ -148,209 +148,231 @@ export function EnglishReviseForm() {
   }
 
   return (
-    <div className="w-full container p-4 mx-auto space-y-6">
-      <Card className="bg-white text-black">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold">英語添削ツール</CardTitle>
-          <CardDescription>
-            英語で書いて、AIに添削してもらいましょう
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
-                control={form.control}
-                name="diaryEntry"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>日記</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Write your diary entry here..."
-                        className="min-h-[200px] text-xl"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription>英語で書いてください</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="writingStyle"
-                render={({ field }) => (
-                  <FormItem className="space-y-3">
-                    <FormLabel>文章表現</FormLabel>
-                    <FormControl>
-                      <RadioGroup
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                        className="flex flex-col space-y-1"
-                      >
-                        <FormItem className="flex items-center space-x-3 space-y-0">
-                          <FormControl>
-                            <RadioGroupItem value="casual" />
-                          </FormControl>
-                          <FormLabel className="font-normal">Casual</FormLabel>
-                        </FormItem>
-                        <FormItem className="flex items-center space-x-3 space-y-0">
-                          <FormControl>
-                            <RadioGroupItem value="formal" />
-                          </FormControl>
-                          <FormLabel className="font-normal">Formal</FormLabel>
-                        </FormItem>
-                        <FormItem className="flex items-center space-x-3 space-y-0">
-                          <FormControl>
-                            <RadioGroupItem value="normal" />
-                          </FormControl>
-                          <FormLabel className="font-normal">Normal</FormLabel>
-                        </FormItem>
-                      </RadioGroup>
-                    </FormControl>
-                    <FormDescription>
-                      添削する文章表現を選択してください
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="errorLevel"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>誤りのレベル</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
+    <div className="w-full space-y-6 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-6">
+      <div className="space-y-6">
+        <Card className="h-full">
+          <CardHeader>
+            <CardTitle className="text-2xl font-bold">英語添削ツール</CardTitle>
+            <CardDescription>
+              英語で書いて、AIに添削してもらいましょう
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6"
+              >
+                <FormField
+                  control={form.control}
+                  name="diaryEntry"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>日記</FormLabel>
                       <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="誤りのレベルを選択" />
-                        </SelectTrigger>
+                        <Textarea
+                          placeholder="Write your diary entry here..."
+                          className="min-h-[300px] text-base leading-relaxed resize-y font-mono"
+                          {...field}
+                        />
                       </FormControl>
-                      <SelectContent>
-                        <SelectItem value="basic">Basic</SelectItem>
-                        <SelectItem value="intermediate">
-                          Intermediate
-                        </SelectItem>
-                        <SelectItem value="advanced">Advanced</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormDescription>
-                      添削する誤りのレベルを選択してください
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="errorTypes"
-                render={() => (
-                  <FormItem>
-                    <div className="mb-4">
-                      <FormLabel className="text-base">誤りの種類</FormLabel>
-                      <FormDescription>
-                        添削する誤りの種類を選択してください（複数選択可）
-                      </FormDescription>
-                    </div>
-                    {errorTypeItems.map((item) => (
-                      <FormField
-                        key={item.id}
-                        control={form.control}
-                        name="errorTypes"
-                        render={({ field }) => {
-                          return (
-                            <FormItem
-                              key={item.id}
-                              className="flex flex-row items-start space-x-3 space-y-0"
-                            >
+                      <FormDescription>英語で書いてください</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <FormField
+                    control={form.control}
+                    name="writingStyle"
+                    render={({ field }) => (
+                      <FormItem className="space-y-3">
+                        <FormLabel>文章表現</FormLabel>
+                        <FormControl>
+                          <RadioGroup
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                            className="flex flex-col space-y-1"
+                          >
+                            <FormItem className="flex items-center space-x-3 space-y-0">
                               <FormControl>
-                                <Checkbox
-                                  checked={field.value?.includes(
-                                    item.id as
-                                      | "grammar"
-                                      | "vocabulary"
-                                      | "usage"
-                                  )}
-                                  onCheckedChange={(checked) => {
-                                    return checked
-                                      ? field.onChange([
-                                          ...field.value,
-                                          item.id,
-                                        ])
-                                      : field.onChange(
-                                          field.value?.filter(
-                                            (value) => value !== item.id
-                                          )
-                                        );
-                                  }}
-                                />
+                                <RadioGroupItem value="casual" />
                               </FormControl>
-                              <FormLabel className="font-normal">
-                                {item.label}
+                              <FormLabel className="font-normal cursor-pointer">
+                                Casual
                               </FormLabel>
                             </FormItem>
-                          );
-                        }}
-                      />
-                    ))}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button
-                type="submit"
-                className="w-full bg-green-400 hover:bg-green-400/80 hover:bg-opacity-80 text-white font-bold"
-                disabled={isProofLoading}
-              >
-                {isProofLoading ? (
-                  <>
-                    <Loader2 className="w-5 h-5 animate-spin" />{" "}
-                    <span>処理中...</span>
-                  </>
-                ) : (
-                  <span>添削する</span>
-                )}
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
+                            <FormItem className="flex items-center space-x-3 space-y-0">
+                              <FormControl>
+                                <RadioGroupItem value="formal" />
+                              </FormControl>
+                              <FormLabel className="font-normal cursor-pointer">
+                                Formal
+                              </FormLabel>
+                            </FormItem>
+                            <FormItem className="flex items-center space-x-3 space-y-0">
+                              <FormControl>
+                                <RadioGroupItem value="normal" />
+                              </FormControl>
+                              <FormLabel className="font-normal cursor-pointer">
+                                Normal
+                              </FormLabel>
+                            </FormItem>
+                          </RadioGroup>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-      <Card className="bg-white text-black">
-        <CardHeader>
-          <CardTitle className="text-xl font-bold">添削結果</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="prose max-w-none">
-            {proofreadText ? (
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                {proofreadText}
-              </ReactMarkdown>
-            ) : (
-              <p className="text-gray-500">添削結果がここに表示されます...</p>
+                  <div className="space-y-6">
+                    <FormField
+                      control={form.control}
+                      name="errorLevel"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>誤りのレベル</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="誤りのレベルを選択" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="basic">Basic</SelectItem>
+                              <SelectItem value="intermediate">
+                                Intermediate
+                              </SelectItem>
+                              <SelectItem value="advanced">Advanced</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="errorTypes"
+                      render={() => (
+                        <FormItem>
+                          <FormLabel>誤りの種類</FormLabel>
+                          <div className="grid grid-cols-1 gap-2">
+                            {errorTypeItems.map((item) => (
+                              <FormField
+                                key={item.id}
+                                control={form.control}
+                                name="errorTypes"
+                                render={({ field }) => {
+                                  return (
+                                    <FormItem
+                                      key={item.id}
+                                      className="flex flex-row items-center space-x-3 space-y-0"
+                                    >
+                                      <FormControl>
+                                        <Checkbox
+                                          checked={field.value?.includes(
+                                            item.id as
+                                              | "grammar"
+                                              | "vocabulary"
+                                              | "usage"
+                                          )}
+                                          onCheckedChange={(checked) => {
+                                            return checked
+                                              ? field.onChange([
+                                                  ...field.value,
+                                                  item.id,
+                                                ])
+                                              : field.onChange(
+                                                  field.value?.filter(
+                                                    (value) => value !== item.id
+                                                  )
+                                                );
+                                          }}
+                                        />
+                                      </FormControl>
+                                      <FormLabel className="font-normal cursor-pointer">
+                                        {item.label}
+                                      </FormLabel>
+                                    </FormItem>
+                                  );
+                                }}
+                              />
+                            ))}
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+
+                <Button
+                  type="submit"
+                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold h-12 text-lg transition-all"
+                  disabled={isProofLoading}
+                >
+                  {isProofLoading ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin mr-2" />
+                      <span>Processing...</span>
+                    </>
+                  ) : (
+                    <span>Proofread Text</span>
+                  )}
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="relative">
+        <Card className="h-full flex flex-col sticky top-6">
+          <CardHeader>
+            <CardTitle className="text-xl font-bold flex items-center gap-2">
+              添削結果
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="flex-1 flex flex-col min-h-[400px]">
+            <div className="prose dark:prose-invert max-w-none flex-1 overflow-y-auto">
+              {proofreadText ? (
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {proofreadText}
+                </ReactMarkdown>
+              ) : (
+                <div className="h-full flex flex-col items-center justify-center text-muted-foreground border-2 border-dashed rounded-lg p-12">
+                  <p>修正されたテキストがここに表示されます</p>
+                </div>
+              )}
+            </div>
+
+            {proofreadText && (
+              <div className="pt-6 mt-auto">
+                <Button
+                  onClick={saveToNotion}
+                  className="w-full"
+                  variant="default"
+                  disabled={isSaveLoading}
+                >
+                  {isSaveLoading ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin mr-2" />
+                      <span>Saving...</span>
+                    </>
+                  ) : (
+                    <span>Save to Notion</span>
+                  )}
+                </Button>
+              </div>
             )}
-          </div>
-          <Button
-            onClick={saveToNotion}
-            className="w-full mt-4"
-            variant="green"
-          >
-            {isSaveLoading ? (
-              <>
-                <Loader2 className="w-5 h-5 animate-spin" />{" "}
-                <span>処理中...</span>
-              </>
-            ) : (
-              <span>Notionに保存する</span>
-            )}
-          </Button>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
-import Header from "@/components/Header/Header";
-import { Breadcrumbs } from "@/components/BreadCrumbs";
-import { siteLinks } from "@/config/siteLinks";
+import { AppSidebar } from "@/components/app-sidebar";
+import {
+  SidebarProvider,
+  SidebarInset,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,13 +37,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="h-lvh grid grid-rows-[64px_64px_1fr] bg-background">
-          <Header />
-          <div className="container mx-auto flex items-center p-4">
-            <Breadcrumbs segments={siteLinks} />
-          </div>
-          <main className="container mx-auto p-4">{children}</main>
-        </div>
+        <SidebarProvider>
+          <AppSidebar />
+          <SidebarInset>
+            <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+              <SidebarTrigger className="-ml-1" />
+            </header>
+            <div className="flex flex-1 flex-col gap-4 p-4">{children}</div>
+          </SidebarInset>
+        </SidebarProvider>
         <Toaster />
       </body>
     </html>
