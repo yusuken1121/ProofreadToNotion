@@ -22,6 +22,12 @@ import { Loader2, Play, Send, Save, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
+import {
+  generateProblemAction,
+  evaluateEssayAction,
+  syncSessionAction,
+} from "@/app/_actions/ielts";
+import { TaskType } from "@/core/domain/ielts-entities";
 
 // Types matching our API response
 interface IELTSFeedback {
@@ -75,13 +81,8 @@ export default function IELTSPage() {
     setIsLoadingQuestion(true);
 
     try {
-      const res = await fetch("/api/ielts/question", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ taskType }),
-      });
-      const data = await res.json();
-      if (data.question) setQuestion(data.question);
+      const question = await generateProblemAction(taskType as TaskType);
+      if (question) setQuestion(question);
     } catch (e) {
       console.error("Failed to generate question");
       setQuestion(
@@ -100,15 +101,10 @@ export default function IELTSPage() {
 
     setPhase("analyzing");
     try {
-      const res = await fetch("/api/ielts/evaluate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ essay, taskType }),
-      });
+      const data = await evaluateEssayAction(essay, taskType as TaskType);
 
-      if (!res.ok) throw new Error("Analysis failed");
-
-      const data = await res.json();
+      // Map domain entity to local interface if needed, or rely on structural compatibility
+      // The structures are identical based on our definitions
       setFeedback(data);
       setPhase("result");
 
@@ -124,25 +120,11 @@ export default function IELTSPage() {
   const handleSync = async (dataToSync: IELTSFeedback) => {
     setIsSyncing(true);
     try {
-      const res = await fetch("/api/ielts/sync", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          diaryEntry: essay,
-          scores: {
-            overall: dataToSync.overall_band,
-            TR: dataToSync.criteria.TR.score,
-            CC: dataToSync.criteria.CC.score,
-            LR: dataToSync.criteria.LR.score,
-            GRA: dataToSync.criteria.GRA.score,
-          },
-          taskType,
-          weaknessTags: dataToSync.weakness_tags,
-          vocabulary: dataToSync.key_vocabulary,
-        }),
-      });
+      await syncSessionAction(essay, taskType as TaskType, dataToSync);
 
-      if (!res.ok) throw new Error("Sync failed");
+      toast.success("Saved to Notion successfully!", {
+        description: "Your session has been logged and assets created.",
+      });
 
       toast.success("Saved to Notion successfully!", {
         description: "Your session has been logged and assets created.",
