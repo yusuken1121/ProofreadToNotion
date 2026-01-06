@@ -8,6 +8,8 @@ import {
   SidebarInset,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { ThemeProvider } from "@/components/theme-provider";
+import { ModeToggle } from "@/components/mode-toggle";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,20 +35,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full dark">
+    <html lang="en" className="h-full" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SidebarProvider>
-          <AppSidebar />
-          <SidebarInset>
-            <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-              <SidebarTrigger className="-ml-1" />
-            </header>
-            <div className="flex flex-1 flex-col gap-4 p-4">{children}</div>
-          </SidebarInset>
-        </SidebarProvider>
-        <Toaster />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>
+              <header className="flex h-16 shrink-0 items-center justify-between gap-2 border-b px-4">
+                <div className="flex items-center gap-2">
+                  <SidebarTrigger className="-ml-1" />
+                </div>
+                <ModeToggle />
+              </header>
+              <div className="flex flex-1 flex-col gap-4 p-4">{children}</div>
+            </SidebarInset>
+          </SidebarProvider>
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

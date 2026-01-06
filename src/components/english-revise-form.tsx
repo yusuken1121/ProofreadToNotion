@@ -313,7 +313,7 @@ export function EnglishReviseForm() {
 
                 <Button
                   type="submit"
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold h-12 text-lg transition-all"
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold h-12 text-lg transition-all"
                   disabled={isProofLoading}
                 >
                   {isProofLoading ? (
@@ -332,7 +332,7 @@ export function EnglishReviseForm() {
       </div>
 
       <div className="relative">
-        <Card className="h-full flex flex-col sticky top-6">
+        <Card className="h-full flex flex-col sticky top-6 bg-card text-card-foreground">
           <CardHeader>
             <CardTitle className="text-xl font-bold flex items-center gap-2">
               添削結果
@@ -345,7 +345,7 @@ export function EnglishReviseForm() {
                   {proofreadText}
                 </ReactMarkdown>
               ) : (
-                <div className="h-full flex flex-col items-center justify-center text-muted-foreground border-2 border-dashed rounded-lg p-12">
+                <div className="h-full flex flex-col items-center justify-center text-muted-foreground border-2 border-dashed border-border rounded-lg p-12">
                   <p>修正されたテキストがここに表示されます</p>
                 </div>
               )}

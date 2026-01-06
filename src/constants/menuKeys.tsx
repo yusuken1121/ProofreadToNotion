@@ -30,32 +30,32 @@ export const SIDEBAR_CONFIG: Record<MenuKey, SidebarItemConfig> = {
     label: "Proofread / 英語添削",
     path: PATH.PROOFREAD,
     icon: <PenTool className="h-5 w-5" />,
-    activeColor: "text-blue-600 dark:text-blue-400",
+    activeColor: "text-chart-1",
   },
   [MENU_KEYS.SPECIAL_LESSON]: {
     label: "Special Lesson",
     path: PATH.SPECIAL_LESSON,
     icon: <Sparkles className="h-5 w-5" />,
-    activeColor: "text-amber-500 dark:text-amber-400",
+    activeColor: "text-chart-2",
   },
   [MENU_KEYS.TOEIC]: {
     label: "TOEIC Analytics",
     path: PATH.TOEIC,
     icon: <Target className="h-5 w-5" />,
-    activeColor: "text-red-600 dark:text-red-400",
+    activeColor: "text-chart-3",
   },
   [MENU_KEYS.BUSINESS_ENGLISH]: {
     label: "Business English",
     path: PATH.BUSINESS_ENGLISH,
     icon: <Briefcase className="h-5 w-5" />,
-    activeColor: "text-sky-600 dark:text-sky-400",
+    activeColor: "text-chart-4",
   },
 
   [MENU_KEYS.IELTS]: {
     label: "IELTS Analytics",
     path: PATH.IELTS,
     icon: <Target className="h-5 w-5" />,
-    activeColor: "text-red-600 dark:text-red-400",
+    activeColor: "text-chart-5",
   },
 
   // Common Items

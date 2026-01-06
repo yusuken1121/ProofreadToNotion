@@ -151,7 +151,7 @@ export function AppSidebar() {
 
         <div className="rounded-lg bg-sidebar-accent/50 p-3">
           <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center">
+            <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center">
               <span className="text-xs font-bold">U</span>
             </div>
             <div className="text-xs">

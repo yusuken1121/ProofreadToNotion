@@ -163,7 +163,7 @@ export default function MemoQuizPage() {
                   {segments[currentSegmentIndex]}
                 </div>
               ) : (
-                <div className="p-4 bg-slate-100 dark:bg-slate-800 rounded-md h-16 flex items-center justify-center text-muted-foreground italic">
+                <div className="p-4 bg-muted rounded-md h-16 flex items-center justify-center text-muted-foreground italic">
                   (Type the sentence below)
                 </div>
               )}
@@ -174,7 +174,7 @@ export default function MemoQuizPage() {
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
                 placeholder="Type the sentence here..."
-                className="min-h-[100px] text-lg"
+                className="min-h-[100px] text-lg bg-background"
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && !e.shiftKey) {
                     e.preventDefault();
@@ -187,7 +187,11 @@ export default function MemoQuizPage() {
 
             {feedback && (
               <div
-                className={`p-4 rounded-md flex items-center gap-2 ${feedback === "correct" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+                className={`p-4 rounded-md flex items-center gap-2 ${
+                  feedback === "correct"
+                    ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300"
+                    : "bg-destructive/15 text-destructive"
+                }`}
               >
                 {feedback === "correct" ? (
                   <>
@@ -216,7 +220,7 @@ export default function MemoQuizPage() {
               {feedback === "correct" && (
                 <Button
                   onClick={nextSegment}
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                  className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
                 >
                   Next Sentence
                 </Button>

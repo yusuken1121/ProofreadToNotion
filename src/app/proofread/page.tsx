@@ -6,7 +6,7 @@ export default function ProofreadPage() {
       <div className="w-full flex justify-end px-2">
         <a
           href="/special-lesson/quiz"
-          className="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1 transition-colors"
+          className="text-sm font-medium text-primary hover:underline flex items-center gap-1 transition-colors"
         >
           <span>👉 Try Special Challenge: The Dual Imperative</span>
         </a>

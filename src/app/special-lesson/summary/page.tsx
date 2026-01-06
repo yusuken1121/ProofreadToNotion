@@ -22,51 +22,51 @@ export default function SummaryPage() {
   const getIconForSection = (id: string) => {
     switch (id) {
       case "project-title":
-        return <BookOpen className="h-5 w-5 text-indigo-500" />;
+        return <BookOpen className="h-5 w-5 text-chart-1" />;
       case "english-text":
-        return <Languages className="h-5 w-5 text-blue-500" />;
+        return <Languages className="h-5 w-5 text-chart-2" />;
       case "japanese-text":
-        return <Languages className="h-5 w-5 text-emerald-500" />;
+        return <Languages className="h-5 w-5 text-chart-3" />;
       case "summary-japanese":
-        return <FileText className="h-5 w-5 text-orange-500" />;
+        return <FileText className="h-5 w-5 text-chart-4" />;
       case "essential-phrases":
-        return <Sparkles className="h-5 w-5 text-amber-500" />;
+        return <Sparkles className="h-5 w-5 text-chart-5" />;
       case "grammar-highlights":
-        return <GraduationCap className="h-5 w-5 text-purple-500" />;
+        return <GraduationCap className="h-5 w-5 text-primary" />;
       default:
-        return <BookOpen className="h-5 w-5" />;
+        return <BookOpen className="h-5 w-5 text-foreground" />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-5xl mx-auto space-y-8">
         {/* Header Navigation */}
         <div className="flex items-center justify-between no-print">
           <Button
             variant="ghost"
             onClick={() => router.push("/special-lesson/quiz")}
-            className="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+            className="text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Quiz
           </Button>
           <div className="flex items-center gap-2">
-            <span className="text-sm text-slate-500 dark:text-slate-400 font-medium">
+            <span className="text-sm text-muted-foreground font-medium">
               Dual Imperative Module
             </span>
           </div>
         </div>
 
         {/* Hero Header */}
-        <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-3xl p-8 md:p-12 shadow-2xl text-white relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl -mr-32 -mt-32"></div>
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl -ml-32 -mb-32"></div>
+        <div className="bg-primary rounded-3xl p-8 md:p-12 shadow-2xl text-primary-foreground relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-background/20 rounded-full blur-3xl -mr-32 -mt-32"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-background/20 rounded-full blur-3xl -ml-32 -mb-32"></div>
           <div className="relative z-10">
             <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">
               Comprehensive Study Guide
             </h1>
-            <p className="text-lg text-slate-300 max-w-2xl">
+            <p className="text-lg text-primary-foreground/90 max-w-2xl">
               Deep dive into the material with full translations, grammar
               analysis, and key vocabulary.
             </p>
@@ -78,24 +78,24 @@ export default function SummaryPage() {
           {SUMMARY_SECTIONS.map((section) => (
             <Card
               key={section.id}
-              className="overflow-hidden border-0 shadow-lg ring-1 ring-slate-200 dark:ring-slate-800"
+              className="overflow-hidden border-border shadow-lg"
             >
-              <div className="border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 p-6 flex items-center gap-3">
-                <div className="p-2 bg-white dark:bg-slate-800 rounded-lg shadow-sm">
+              <div className="border-b border-border bg-muted/50 p-6 flex items-center gap-3">
+                <div className="p-2 bg-card rounded-lg shadow-sm">
                   {getIconForSection(section.id)}
                 </div>
-                <h2 className="text-xl font-bold text-slate-800 dark:text-slate-200">
+                <h2 className="text-xl font-bold text-foreground">
                   {section.title}
                 </h2>
               </div>
               <CardContent className="p-8 md:p-10">
                 <article
-                  className="prose prose-lg prose-slate dark:prose-invert max-w-none
-                  prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-slate-900 dark:prose-headings:text-slate-50
-                  prose-p:leading-loose prose-p:text-slate-700 dark:prose-p:text-slate-300 prose-p:mb-8
-                  prose-strong:text-slate-900 dark:prose-strong:text-slate-100 prose-strong:font-bold prose-strong:bg-slate-100 dark:prose-strong:bg-slate-800 prose-strong:px-1 prose-strong:rounded
-                  prose-li:marker:text-indigo-500 prose-li:text-slate-700 dark:prose-li:text-slate-300
-                  prose-blockquote:border-l-4 prose-blockquote:border-indigo-500 prose-blockquote:bg-slate-50 dark:prose-blockquote:bg-slate-800/50 prose-blockquote:py-4 prose-blockquote:px-6 prose-blockquote:rounded-r-xl prose-blockquote:not-italic prose-blockquote:text-slate-700 dark:prose-blockquote:text-slate-300
+                  className="prose prose-lg dark:prose-invert max-w-none
+                  prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-foreground
+                  prose-p:leading-loose prose-p:text-muted-foreground prose-p:mb-8
+                  prose-strong:text-foreground prose-strong:font-bold prose-strong:bg-muted prose-strong:px-1 prose-strong:rounded
+                  prose-li:marker:text-primary prose-li:text-muted-foreground
+                  prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:bg-muted prose-blockquote:py-4 prose-blockquote:px-6 prose-blockquote:rounded-r-xl prose-blockquote:not-italic prose-blockquote:text-foreground
                 "
                 >
                   <ReactMarkdown
@@ -103,13 +103,13 @@ export default function SummaryPage() {
                     components={{
                       h1: ({ node, ...props }) => (
                         <h3
-                          className="text-2xl font-bold mt-8 mb-6 text-indigo-700 dark:text-indigo-300 border-b pb-2 border-slate-200 dark:border-slate-700"
+                          className="text-2xl font-bold mt-8 mb-6 text-primary border-b pb-2 border-border"
                           {...props}
                         />
                       ),
                       h2: ({ node, ...props }) => (
                         <h4
-                          className="text-xl font-bold mt-8 mb-4 text-indigo-600 dark:text-indigo-400 flex items-center gap-2"
+                          className="text-xl font-bold mt-8 mb-4 text-primary flex items-center gap-2"
                           {...props}
                         />
                       ),
@@ -144,7 +144,7 @@ export default function SummaryPage() {
         {/* Footer actions */}
         <div className="flex justify-center pb-12 print:hidden">
           <Button
-            className="bg-slate-900 hover:bg-slate-800 text-white px-8 py-6 rounded-full shadow-xl transition-all hover:scale-105 active:scale-95"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 rounded-full shadow-xl transition-all hover:scale-105 active:scale-95"
             onClick={() => window.print()}
           >
             <Download className="mr-2 h-4 w-4" />
@@ -160,6 +160,7 @@ export default function SummaryPage() {
           }
           body {
             background: white !important;
+            color: black !important;
           }
           .shadow-xl,
           .shadow-2xl,
