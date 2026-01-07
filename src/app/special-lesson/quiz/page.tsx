@@ -140,10 +140,12 @@ export default function QuizPage() {
 
               <div className="relative">
                 {showHint && (
-                  <div className="absolute inset-0 z-10 bg-card/95 backdrop-blur flex items-center justify-center p-6 text-center border rounded-lg border-border animate-in fade-in zoom-in-95 duration-200">
-                    <p className="text-lg font-medium text-primary">
-                      {currentSegment.english}
-                    </p>
+                  <div className="absolute inset-0 z-10 bg-card/95 backdrop-blur flex items-center justify-center border rounded-lg border-border animate-in fade-in zoom-in-95 duration-200 overflow-hidden">
+                    <div className="w-full h-full p-6 overflow-y-auto flex flex-col">
+                      <p className="text-lg font-medium text-primary m-auto text-center">
+                        {currentSegment.english}
+                      </p>
+                    </div>
                   </div>
                 )}
                 <Textarea

@@ -311,64 +311,260 @@ export interface QuizSegment {
 }
 
 export const QUIZ_SEGMENTS: QuizSegment[] = [
+  // Segment 1
   {
     japanese:
-      "人工知能（AI）の出現は、世界の労働力にパラダイムシフトをもたらしました。それは単なる技術的な珍しさという初期の地位を超え、企業戦略の不可欠な礎石となっています。組織がデジタルファースト経済の急務に取り組む中、生成AIや機械学習の職場環境への統合は、周辺的な話題から経営層の議論の中心へと移行しました。本レポートは、AI採用の多面的な影響を明らかにするとともに、AIがいかに生産性を促進するか、そして同時に人的資本管理の徹底的な再評価をいかに必要とするかを検証します。",
+      "人工知能（AI）の出現は、世界の労働力にパラダイムシフトをもたらしました。それは単なる技術的な珍しさという初期の地位を超え、企業戦略の不可欠な礎石となっています。",
     english:
-      "The advent of Artificial Intelligence (AI) has precipitated a paradigm shift within the global workforce, transcending its initial status as a mere technological novelty to become an indispensable cornerstone of corporate strategy. As organizations grapple with the exigencies of a digital-first economy, the integration of generative AI and machine learning into workplace environments has moved from the periphery to the center of executive discourse. This report elucidates the multifaceted impact of AI adoption, examining how it catalyzes productivity while simultaneously necessitating a profound re-evaluation of human capital management.",
+      "The advent of Artificial Intelligence (AI) has precipitated a paradigm shift within the global workforce, transcending its initial status as a mere technological novelty to become an indispensable cornerstone of corporate strategy.",
   },
   {
     japanese:
-      "まず何よりも、AI主導のプロトコルの実施は、業務スループットにおいて数値化可能な改善をもたらしました。従来の事務的枠組みでは、データ入力、スケジューリング、基本的なレポート作成といった定型業務に多大な人的資本が割かれることが多く、それらは不可欠ではあるものの、知的投資に対する限界収益は減少傾向にありました。ソフトウェアの調達やインフラの刷新に必要な初期資本支出があるにもかかわらず、長期的な財政的利益は疑いようがありません。これらの「低付加価値」プロセスを自動化することで、AIは労働力が戦略的な高度な推論や創造的な問題解決へと軸足を移すことを可能にします。",
+      "組織がデジタルファースト経済の急務に取り組む中、生成AIや機械学習の職場環境への統合は、周辺的な話題から経営層の議論の中心へと移行しました。",
     english:
-      'First and foremost, the implementation of AI-driven protocols has yielded quantifiable improvements in operational throughput. In traditional administrative frameworks, significant human capital was often diverted toward mundane, repetitive tasks—data entry, scheduling, and basic report generation—that, while essential, offered diminishing marginal returns on intellectual investment. Notwithstanding the initial capital expenditure required for software procurement and infrastructure overhaul, the long-term fiscal benefits are incontrovertible. By automating these "low-value" processes, AI permits the workforce to pivot toward strategic high-level reasoning and creative problem-solving.',
+      "As organizations grapple with the exigencies of a digital-first economy, the integration of generative AI and machine learning into workplace environments has moved from the periphery to the center of executive discourse.",
   },
   {
     japanese:
-      "この点を例証しているのが、いくつかのフォーチュン500企業におけるAI統合型プロジェクト管理システム（PMS）の最近の導入です。これらのシステムは単に進捗を追跡するだけでなく、予測分析を利用してボトルネックが顕在化する前にそれを予見します。その結果、プロジェクトのリードタイムは約25%短縮されました。これは株主価値の向上と直接相関する指標です。技術的な介入が、これほど直接的に収益向上への道筋を提供したことは稀です。しかし、AIを効率性の観点のみで捉えることは、そのより微妙で変革的な力を見落とすことになります。",
+      "本レポートは、AI採用の多面的な影響を明らかにするとともに、AIがいかに生産性を促進するか、そして同時に人的資本管理の徹底的な再評価をいかに必要とするかを検証します。",
     english:
-      "Illustrative of this point is the recent deployment of AI-integrated Project Management Systems (PMS) in several Fortune 500 companies. These systems do not merely track progress; they utilize predictive analytics to anticipate bottlenecks before they manifest. Consequently, project lead times have seen a reduction of approximately 25%, a metric that directly correlates with increased shareholder value. Rarely has a technological intervention offered such a direct conduit to enhanced profitability. However, to view AI solely through the lens of efficiency is to overlook its more nuanced transformative power.",
+      "This report elucidates the multifaceted impact of AI adoption, examining how it catalyzes productivity while simultaneously necessitating a profound re-evaluation of human capital management.",
+  },
+
+  // Segment 2
+  {
+    japanese:
+      "まず何よりも、AI主導のプロトコルの実施は、業務スループットにおいて数値化可能な改善をもたらしました。",
+    english:
+      "First and foremost, the implementation of AI-driven protocols has yielded quantifiable improvements in operational throughput.",
   },
   {
     japanese:
-      "紛れもなく効率的ではあるものの、AIの導入は職場に複雑な心理的側面をもたらします。「拡張か代替か」という議論は、依然として従業員の不安の焦点となっています。AIを成功裏に統合するためには、それを人間の労働の代役としてではなく、人間の能力を拡張するために設計された洗練されたツールとして提示しなければなりません。職場環境の変化は明白です。物理的なオフィスは、AIがデータ量の多い「重労働」を処理し、人間が対人コミュニケーションの複雑さや倫理的な意思決定を司る、協調的なシナジーのハブへと進化しています。",
+      "従来の事務的枠組みでは、データ入力、スケジューリング、基本的なレポート作成といった定型業務に多大な人的資本が割かれることが多く、それらは不可欠ではあるものの、知的投資に対する限界収益は減少傾向にありました。",
     english:
-      'Albeit undeniably efficient, the introduction of AI introduces a complex psychological dimension to the workplace. The "augmentation vs. replacement" debate remains a focal point of employee anxiety. For AI to be successfully integrated, it must be presented not as a surrogate for human labor, but as a sophisticated tool designed to augment human capabilities. The shift in the workplace environment is palpable; the physical office is evolving into a hub for collaborative synergy, where AI handles the data-heavy "heavy lifting," leaving humans to navigate the intricacies of interpersonal communication and ethical decision-making.',
+      "In traditional administrative frameworks, significant human capital was often diverted toward mundane, repetitive tasks—data entry, scheduling, and basic report generation—that, while essential, offered diminishing marginal returns on intellectual investment.",
   },
   {
     japanese:
-      "さらに、AIによるデータの民主化は、中間管理職が以前は経営幹部のみの領域であったエビデンスに基づく意思決定を行うことを可能にします。この組織階層のフラット化は、より実力主義的な文化を育みます。それにもかかわらず、この移行には摩擦がないわけではありません。AIとの対話（プロンプト・エンジニアリング）に長けた者と、適応に苦労する者との間の相違は、労働力内でのデジタル・ディバイドを悪化させる可能性があります。したがって、継続的な専門能力開発のための強固な枠組みは、単なる人事部の好みではなく、組織の生き残りのための前提条件なのです。",
+      "ソフトウェアの調達やインフラの刷新に必要な初期資本支出があるにもかかわらず、長期的な財政的利益は疑いようがありません。",
     english:
-      'Furthermore, the democratization of data via AI empowers mid-level managers to make evidence-based decisions that were previously the sole province of senior executives. This flattening of the organizational hierarchy fosters a more meritocratic culture. Nevertheless, this transition is not without its friction. The discrepancy between those proficient in AI interaction—"prompt engineering"—and those struggling to adapt could potentially exacerbate the digital divide within the workforce. Therefore, a robust framework for continuous professional development is not merely an HR preference; it is a prerequisite for organizational survival.',
+      "Notwithstanding the initial capital expenditure required for software procurement and infrastructure overhaul, the long-term fiscal benefits are incontrovertible.",
   },
   {
     japanese:
-      "極めて重要なことに、私たちがより多くの認知タスクをアルゴリズムに委ねるにつれ、「自動化のパラドックス」に直面します。つまり、システムの信頼性が高まるほど、人間のオペレーターの警戒心は薄れていくのです。IELTSアカデミックの文脈では、これは「認知の退化」に関する深い問いを投げかけます。もしジュニアアナリストが市場動向の統合を完全にAIに頼り切ってしまったら、彼らはその根底にある批判的分析を行う能力を失ってしまうのでしょうか？この懸念は、アルゴリズムのエラーがもたらすリスクが非常に高い銀行や法務セクターにおいて、特に適切です。",
+      "これらの「低付加価値」プロセスを自動化することで、AIは労働力が戦略的な高度な推論や創造的な問題解決へと軸足を移すことを可能にします。",
     english:
-      'Crucially, as we delegate more cognitive tasks to algorithms, we encounter the paradox of automation: the more reliable the system, the less vigilant the human operator becomes. In an IELTS Academic context, this raises profound questions regarding "cognitive atrophy." If junior analysts rely entirely on AI to synthesize market trends, do they lose the ability to perform the underlying critical analysis? This concern is particularly pertinent in the banking and legal sectors, where the stakes of an algorithmic error are exceptionally high.',
+      'By automating these "low-value" processes, AI permits the workforce to pivot toward strategic high-level reasoning and creative problem-solving.',
+  },
+
+  // Segment 3
+  {
+    japanese:
+      "この点を例証しているのが、いくつかのフォーチュン500企業におけるAI統合型プロジェクト管理システム（PMS）の最近の導入です。",
+    english:
+      "Illustrative of this point is the recent deployment of AI-integrated Project Management Systems (PMS) in several Fortune 500 companies.",
   },
   {
     japanese:
-      "さらに、採用におけるアルゴリズムの偏向からプライバシーの侵害に至るまで、AI導入の倫理的影響は、技術的能力を超えた精査を必要とします。AIは効率的であるだけでなく、透明性と説明責任を備えていなければなりません。厳格な倫理指針を確立できない企業は、重大なレピュテーション・ダメージを被るリスクがあり、SNSの時代において、それは短期的な財務損失よりも有害となる可能性があります。",
+      "これらのシステムは単に進捗を追跡するだけでなく、予測分析を利用してボトルネックが顕在化する前にそれを予見します。",
     english:
-      "Moreover, the ethical implications of AI deployment—ranging from algorithmic bias in recruitment to the erosion of privacy—demand a level of scrutiny that transcends technological capability. Not only must AI be efficient, but it must also be transparent and accountable. Corporations that fail to establish rigorous ethical guidelines risk significant reputational damage, which, in the age of social media, can be more detrimental than short-term financial losses.",
+      "These systems do not merely track progress; they utilize predictive analytics to anticipate bottlenecks before they manifest.",
   },
   {
     japanese:
-      "AIはパターン認識やデータ統合に長けていますが、人間の感情インテリジェンス（EQ）の微妙なスペクトラムを再現することは根本的に不可能です。企業交渉やデリケートな人事調停といった利害関係の大きい環境において、「ヒューマン・タッチ」は代替不可能です。未来のリーダーとは、必ずしも技術的に最も精通した個人ではなく、AIが生成した洞察と人間の共感や道徳的明晰さを、最も効果的に統合できる人物なのです。このシナジーこそが、市場のリーダーと競合他社を分かつものとなるでしょう。",
+      "その結果、プロジェクトのリードタイムは約25%短縮されました。これは株主価値の向上と直接相関する指標です。",
     english:
-      'While AI excels at pattern recognition and data synthesis, it remains fundamentally incapable of replicating the nuanced spectrum of human emotional intelligence (EQ). In the high-stakes environment of corporate negotiations or sensitive HR mediations, the "human touch" is irreplacable. The leader of the future is not necessarily the most technologically proficient individual, but the one who can most effectively synthesize AI-generated insights with human empathy and moral clarity. This synergy is what will distinguish market leaders from their competitors.',
+      "Consequently, project lead times have seen a reduction of approximately 25%, a metric that directly correlates with increased shareholder value.",
   },
   {
     japanese:
-      "AIの恩恵を享受しつつこれらのリスクを軽減するために、3段階の実施戦略を提案します。第一に、組織は既存のワークフローの包括的な監査を行い、自動化による影響が大きい領域を特定しなければなりません。第二に、労働力が「AIリテラシー」を備えることを確実にするため、積極的なリスキリング・イニシアチブを開始する必要があります。最後に、リーダーシップは、AIの出力と人間の監視の間のフィードバック・ループが継続的に洗練される「アジャイルな適応」の文化を培わなければなりません。",
+      "技術的な介入が、これほど直接的に収益向上への道筋を提供したことは稀です。",
     english:
-      'To mitigate these risks while harvesting the rewards of AI, a three-tiered implementation strategy is proposed. Initially, the organization must conduct a comprehensive audit of existing workflows to identify high-impact areas for automation. Secondly, an aggressive upskilling initiative must be launched to ensure that the workforce is "AI-literate." Finally, leadership must cultivate a culture of "agile adaptation," where feedback loops between AI outputs and human oversight are continuously refined.',
+      "Rarely has a technological intervention offered such a direct conduit to enhanced profitability.",
   },
   {
     japanese:
-      "結論として、人工知能の統合は避けられない現実であり、洗練された二段構えのアプローチを必要とします。私たちは生産性における量的な利益を受け入れつつ、人的資本への質的な影響に対しては常に細心の注意を払わなければなりません。今後10年間で繁栄する組織は、単に優れたアルゴリズムを持つ組織ではなく、人間とAIの協調の術をマスターした組織となるでしょう。私たちがこの努力に成功すれば、その結果、職場はかつてないほど生産的で、包摂的で、そして知的な刺激に満ちた場所となるはずです。",
+      "しかし、AIを効率性の観点のみで捉えることは、そのより微妙で変革的な力を見落とすことになります。",
     english:
-      "In conclusion, the integration of Artificial Intelligence is an inevitability that necessitates a sophisticated, dual-pronged approach. We must embrace the quantitative gains in productivity while remaining hyper-vigilant of the qualitative impact on our human capital. The organizations that thrive in the coming decade will not be those that simply possess the best algorithms, but those that master the art of human-AI collaboration. Should we succeed in this endeavor, the result will be a workplace that is more productive, more inclusive, and more intellectually stimulating than ever before.",
+      "However, to view AI solely through the lens of efficiency is to overlook its more nuanced transformative power.",
+  },
+
+  // Segment 4
+  {
+    japanese:
+      "紛れもなく効率的ではあるものの、AIの導入は職場に複雑な心理的側面をもたらします。",
+    english:
+      "Albeit undeniably efficient, the introduction of AI introduces a complex psychological dimension to the workplace.",
+  },
+  {
+    japanese:
+      "「拡張か代替か」という議論は、依然として従業員の不安の焦点となっています。",
+    english:
+      'The "augmentation vs. replacement" debate remains a focal point of employee anxiety.',
+  },
+  {
+    japanese:
+      "AIを成功裏に統合するためには、それを人間の労働の代役としてではなく、人間の能力を拡張するために設計された洗練されたツールとして提示しなければなりません。",
+    english:
+      "For AI to be successfully integrated, it must be presented not as a surrogate for human labor, but as a sophisticated tool designed to augment human capabilities.",
+  },
+  {
+    japanese:
+      "職場環境の変化は明白です。物理的なオフィスは、AIがデータ量の多い「重労働」を処理し、人間が対人コミュニケーションの複雑さや倫理的な意思決定を司る、協調的なシナジーのハブへと進化しています。",
+    english:
+      'The shift in the workplace environment is palpable; the physical office is evolving into a hub for collaborative synergy, where AI handles the data-heavy "heavy lifting," leaving humans to navigate the intricacies of interpersonal communication and ethical decision-making.',
+  },
+
+  // Segment 5
+  {
+    japanese:
+      "さらに、AIによるデータの民主化は、中間管理職が以前は経営幹部のみの領域であったエビデンスに基づく意思決定を行うことを可能にします。",
+    english:
+      "Furthermore, the democratization of data via AI empowers mid-level managers to make evidence-based decisions that were previously the sole province of senior executives.",
+  },
+  {
+    japanese: "この組織階層のフラット化は、より実力主義的な文化を育みます。",
+    english:
+      "This flattening of the organizational hierarchy fosters a more meritocratic culture.",
+  },
+  {
+    japanese: "それにもかかわらず、この移行には摩擦がないわけではありません。",
+    english: "Nevertheless, this transition is not without its friction.",
+  },
+  {
+    japanese:
+      "AIとの対話（プロンプト・エンジニアリング）に長けた者と、適応に苦労する者との間の相違は、労働力内でのデジタル・ディバイドを悪化させる可能性があります。",
+    english:
+      'The discrepancy between those proficient in AI interaction—"prompt engineering"—and those struggling to adapt could potentially exacerbate the digital divide within the workforce.',
+  },
+  {
+    japanese:
+      "したがって、継続的な専門能力開発のための強固な枠組みは、単なる人事部の好みではなく、組織の生き残りのための前提条件なのです。",
+    english:
+      "Therefore, a robust framework for continuous professional development is not merely an HR preference; it is a prerequisite for organizational survival.",
+  },
+
+  // Segment 6
+  {
+    japanese:
+      "極めて重要なことに、私たちがより多くの認知タスクをアルゴリズムに委ねるにつれ、「自動化のパラドックス」に直面します。つまり、システムの信頼性が高まるほど、人間のオペレーターの警戒心は薄れていくのです。",
+    english:
+      "Crucially, as we delegate more cognitive tasks to algorithms, we encounter the paradox of automation: the more reliable the system, the less vigilant the human operator becomes.",
+  },
+  {
+    japanese:
+      "IELTSアカデミックの文脈では、これは「認知の退化」に関する深い問いを投げかけます。",
+    english:
+      'In an IELTS Academic context, this raises profound questions regarding "cognitive atrophy."',
+  },
+  {
+    japanese:
+      "もしジュニアアナリストが市場動向の統合を完全にAIに頼り切ってしまったら、彼らはその根底にある批判的分析を行う能力を失ってしまうのでしょうか？",
+    english:
+      "If junior analysts rely entirely on AI to synthesize market trends, do they lose the ability to perform the underlying critical analysis?",
+  },
+  {
+    japanese:
+      "この懸念は、アルゴリズムのエラーがもたらすリスクが非常に高い銀行や法務セクターにおいて、特に適切です。",
+    english:
+      "This concern is particularly pertinent in the banking and legal sectors, where the stakes of an algorithmic error are exceptionally high.",
+  },
+
+  // Segment 7
+  {
+    japanese:
+      "さらに、採用におけるアルゴリズムの偏向からプライバシーの侵害に至るまで、AI導入の倫理的影響は、技術的能力を超えた精査を必要とします。",
+    english:
+      "Moreover, the ethical implications of AI deployment—ranging from algorithmic bias in recruitment to the erosion of privacy—demand a level of scrutiny that transcends technological capability.",
+  },
+  {
+    japanese:
+      "AIは効率的であるだけでなく、透明性と説明責任を備えていなければなりません。",
+    english:
+      "Not only must AI be efficient, but it must also be transparent and accountable.",
+  },
+  {
+    japanese:
+      "厳格な倫理指針を確立できない企業は、重大なレピュテーション・ダメージを被るリスクがあり、SNSの時代において、それは短期的な財務損失よりも有害となる可能性があります。",
+    english:
+      "Corporations that fail to establish rigorous ethical guidelines risk significant reputational damage, which, in the age of social media, can be more detrimental than short-term financial losses.",
+  },
+
+  // Segment 8
+  {
+    japanese:
+      "AIはパターン認識やデータ統合に長けていますが、人間の感情インテリジェンス（EQ）の微妙なスペクトラムを再現することは根本的に不可能です。",
+    english:
+      "While AI excels at pattern recognition and data synthesis, it remains fundamentally incapable of replicating the nuanced spectrum of human emotional intelligence (EQ).",
+  },
+  {
+    japanese:
+      "企業交渉やデリケートな人事調停といった利害関係の大きい環境において、「ヒューマン・タッチ」は代替不可能です。",
+    english:
+      'In the high-stakes environment of corporate negotiations or sensitive HR mediations, the "human touch" is irreplacable.',
+  },
+  {
+    japanese:
+      "未来のリーダーとは、必ずしも技術的に最も精通した個人ではなく、AIが生成した洞察と人間の共感や道徳的明晰さを、最も効果的に統合できる人物なのです。",
+    english:
+      "The leader of the future is not necessarily the most technologically proficient individual, but the one who can most effectively synthesize AI-generated insights with human empathy and moral clarity.",
+  },
+  {
+    japanese:
+      "このシナジーこそが、市場のリーダーと競合他社を分かつものとなるでしょう。",
+    english:
+      "This synergy is what will distinguish market leaders from their competitors.",
+  },
+
+  // Segment 9
+  {
+    japanese:
+      "AIの恩恵を享受しつつこれらのリスクを軽減するために、3段階の実施戦略を提案します。",
+    english:
+      "To mitigate these risks while harvesting the rewards of AI, a three-tiered implementation strategy is proposed.",
+  },
+  {
+    japanese:
+      "第一に、組織は既存のワークフローの包括的な監査を行い、自動化による影響が大きい領域を特定しなければなりません。",
+    english:
+      "Initially, the organization must conduct a comprehensive audit of existing workflows to identify high-impact areas for automation.",
+  },
+  {
+    japanese:
+      "第二に、労働力が「AIリテラシー」を備えることを確実にするため、積極的なリスキリング・イニシアチブを開始する必要があります。",
+    english:
+      'Secondly, an aggressive upskilling initiative must be launched to ensure that the workforce is "AI-literate."',
+  },
+  {
+    japanese:
+      "最後に、リーダーシップは、AIの出力と人間の監視の間のフィードバック・ループが継続的に洗練される「アジャイルな適応」の文化を培わなければなりません。",
+    english:
+      'Finally, leadership must cultivate a culture of "agile adaptation," where feedback loops between AI outputs and human oversight are continuously refined.',
+  },
+
+  // Segment 10
+  {
+    japanese:
+      "結論として、人工知能の統合は避けられない現実であり、洗練された二段構えのアプローチを必要とします。",
+    english:
+      "In conclusion, the integration of Artificial Intelligence is an inevitability that necessitates a sophisticated, dual-pronged approach.",
+  },
+  {
+    japanese:
+      "私たちは生産性における量的な利益を受け入れつつ、人的資本への質的な影響に対しては常に細心の注意を払わなければなりません。",
+    english:
+      "We must embrace the quantitative gains in productivity while remaining hyper-vigilant of the qualitative impact on our human capital.",
+  },
+  {
+    japanese:
+      "今後10年間で繁栄する組織は、単に優れたアルゴリズムを持つ組織ではなく、人間とAIの協調の術をマスターした組織となるでしょう。",
+    english:
+      "The organizations that thrive in the coming decade will not be those that simply possess the best algorithms, but those that master the art of human-AI collaboration.",
+  },
+  {
+    japanese:
+      "私たちがこの努力に成功すれば、その結果、職場はかつてないほど生産的で、包摂的で、そして知的な刺激に満ちた場所となるはずです。",
+    english:
+      "Should we succeed in this endeavor, the result will be a workplace that is more productive, more inclusive, and more intellectually stimulating than ever before.",
   },
 ];
