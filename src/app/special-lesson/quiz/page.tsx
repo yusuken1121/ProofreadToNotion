@@ -23,6 +23,16 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+
 export default function QuizPage() {
   const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -57,12 +67,16 @@ export default function QuizPage() {
     }
   };
 
+  const goToPage = (index: number) => {
+    setCurrentIndex(index);
+    setUserInput("");
+    setFeedback(null);
+    setShowHint(false);
+  };
+
   const handleNext = () => {
     if (currentIndex < QUIZ_SEGMENTS.length - 1) {
-      setCurrentIndex((prev) => prev + 1);
-      setUserInput("");
-      setFeedback(null);
-      setShowHint(false);
+      goToPage(currentIndex + 1);
     } else {
       router.push("/special-lesson/summary");
     }
@@ -70,6 +84,14 @@ export default function QuizPage() {
 
   const handleSkip = () => {
     router.push("/special-lesson/summary");
+  };
+
+  const getPageNumbers = (current: number, total: number) => {
+    if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+    if (current <= 4) return [1, 2, 3, 4, 5, "...", total];
+    if (current >= total - 3)
+      return [1, "...", total - 4, total - 3, total - 2, total - 1, total];
+    return [1, "...", current - 1, current, current + 1, "...", total];
   };
 
   return (
@@ -216,6 +238,53 @@ export default function QuizPage() {
             )}
           </CardFooter>
         </Card>
+
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={() => currentIndex > 0 && goToPage(currentIndex - 1)}
+                className={
+                  currentIndex === 0
+                    ? "pointer-events-none opacity-50"
+                    : "cursor-pointer"
+                }
+              />
+            </PaginationItem>
+
+            {getPageNumbers(currentIndex + 1, QUIZ_SEGMENTS.length).map(
+              (page, index) => (
+                <PaginationItem key={index}>
+                  {page === "..." ? (
+                    <PaginationEllipsis />
+                  ) : (
+                    <PaginationLink
+                      isActive={page === currentIndex + 1}
+                      onClick={() => goToPage(Number(page) - 1)}
+                      className="cursor-pointer"
+                    >
+                      {page}
+                    </PaginationLink>
+                  )}
+                </PaginationItem>
+              )
+            )}
+
+            <PaginationItem>
+              <PaginationNext
+                onClick={() =>
+                  currentIndex < QUIZ_SEGMENTS.length - 1 &&
+                  goToPage(currentIndex + 1)
+                }
+                className={
+                  currentIndex === QUIZ_SEGMENTS.length - 1
+                    ? "pointer-events-none opacity-50"
+                    : "cursor-pointer"
+                }
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
 
         {feedback === "correct" && (
           <div className="flex justify-center animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
