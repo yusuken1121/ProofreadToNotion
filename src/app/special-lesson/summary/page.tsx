@@ -16,6 +16,13 @@ import {
   GraduationCap,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function SummaryPage() {
   const router = useRouter();
@@ -68,18 +75,26 @@ export default function SummaryPage() {
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Quiz
           </Button>
-          <div className="flex gap-2">
-            {LESSONS.map((lesson) => (
-              <Button
-                key={lesson.id}
-                variant={selectedLessonId === lesson.id ? "secondary" : "ghost"}
-                size="sm"
-                onClick={() => setSelectedLessonId(lesson.id)}
-                className="text-xs"
-              >
-                {lesson.title}
-              </Button>
-            ))}
+          <div className="w-[180px]">
+            <Select
+              value={selectedLessonId}
+              onValueChange={setSelectedLessonId}
+            >
+              <SelectTrigger className="h-8 text-xs">
+                <SelectValue placeholder="Select a lesson" />
+              </SelectTrigger>
+              <SelectContent>
+                {LESSONS.map((lesson) => (
+                  <SelectItem
+                    key={lesson.id}
+                    value={lesson.id}
+                    className="text-xs"
+                  >
+                    {lesson.title}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
 

@@ -11,8 +11,16 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { LESSONS } from "../data";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   CheckCircle2,
   XCircle,
@@ -43,7 +51,7 @@ export default function QuizPage() {
   const [showHint, setShowHint] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const [selectedLessonId, setSelectedLessonId] = useState(LESSONS[0].id);
+  const [selectedLessonId, setSelectedLessonId] = useState(LESSONS[1].id);
 
   // Initialize from URL query param if present
   useEffect(() => {
@@ -123,23 +131,28 @@ export default function QuizPage() {
             {currentLesson.description}
           </p>
 
-          <div className="flex flex-wrap justify-center gap-2">
-            {LESSONS.map((lesson) => (
-              <Button
-                key={lesson.id}
-                variant={selectedLessonId === lesson.id ? "default" : "outline"}
-                size="sm"
-                onClick={() => {
-                  setSelectedLessonId(lesson.id);
-                  setCurrentIndex(0);
-                  setUserInput("");
-                  setFeedback(null);
-                  setShowHint(false);
-                }}
-              >
-                {lesson.title}
-              </Button>
-            ))}
+          <div className="flex justify-center w-full max-w-sm mx-auto pt-2">
+            <Select
+              value={selectedLessonId}
+              onValueChange={(value) => {
+                setSelectedLessonId(value);
+                setCurrentIndex(0);
+                setUserInput("");
+                setFeedback(null);
+                setShowHint(false);
+              }}
+            >
+              <SelectTrigger className="w-full bg-card backdrop-blur-sm border-muted-foreground/20">
+                <SelectValue placeholder="Select a lesson" />
+              </SelectTrigger>
+              <SelectContent>
+                {LESSONS.map((lesson) => (
+                  <SelectItem key={lesson.id} value={lesson.id}>
+                    {lesson.title}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
@@ -318,6 +331,31 @@ export default function QuizPage() {
             </PaginationItem>
           </PaginationContent>
         </Pagination>
+
+        <div className="flex items-center justify-center gap-3 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-200">
+          <span className="text-sm text-muted-foreground font-medium">
+            Go to page
+          </span>
+          <Input
+            type="number"
+            min={1}
+            max={QUIZ_SEGMENTS.length}
+            placeholder="#"
+            className="w-16 h-9 text-center font-medium bg-card/50"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                const val = parseInt(e.currentTarget.value);
+                if (!isNaN(val) && val >= 1 && val <= QUIZ_SEGMENTS.length) {
+                  goToPage(val - 1);
+                  e.currentTarget.blur();
+                }
+              }
+            }}
+          />
+          <span className="text-sm text-muted-foreground font-medium">
+            of {QUIZ_SEGMENTS.length}
+          </span>
+        </div>
 
         {feedback === "correct" && (
           <div className="flex justify-center animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
