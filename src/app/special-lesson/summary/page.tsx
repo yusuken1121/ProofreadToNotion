@@ -1,8 +1,9 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { FULL_MARKDOWN_CONTENT, SUMMARY_SECTIONS } from "../data";
+import { LESSONS } from "../data";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import {
@@ -18,6 +19,20 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export default function SummaryPage() {
   const router = useRouter();
+  const [selectedLessonId, setSelectedLessonId] = useState(LESSONS[0].id);
+
+  // Initialize from URL query param if present
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const lessonId = params.get("lessonId");
+    if (lessonId && LESSONS.some((l) => l.id === lessonId)) {
+      setSelectedLessonId(lessonId);
+    }
+  }, []);
+
+  const currentLesson =
+    LESSONS.find((l) => l.id === selectedLessonId) || LESSONS[0];
+  const SUMMARY_SECTIONS = currentLesson.summarySections;
 
   const getIconForSection = (id: string) => {
     switch (id) {
@@ -45,16 +60,26 @@ export default function SummaryPage() {
         <div className="flex items-center justify-between no-print">
           <Button
             variant="ghost"
-            onClick={() => router.push("/special-lesson/quiz")}
+            onClick={() =>
+              router.push(`/special-lesson/quiz?lessonId=${selectedLessonId}`)
+            }
             className="text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Quiz
           </Button>
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground font-medium">
-              Dual Imperative Module
-            </span>
+          <div className="flex gap-2">
+            {LESSONS.map((lesson) => (
+              <Button
+                key={lesson.id}
+                variant={selectedLessonId === lesson.id ? "secondary" : "ghost"}
+                size="sm"
+                onClick={() => setSelectedLessonId(lesson.id)}
+                className="text-xs"
+              >
+                {lesson.title}
+              </Button>
+            ))}
           </div>
         </div>
 

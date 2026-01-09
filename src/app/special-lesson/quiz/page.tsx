@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
-import { QUIZ_SEGMENTS } from "../data";
+import { LESSONS } from "../data";
 import {
   CheckCircle2,
   XCircle,
@@ -42,6 +42,21 @@ export default function QuizPage() {
   );
   const [showHint, setShowHint] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const [selectedLessonId, setSelectedLessonId] = useState(LESSONS[0].id);
+
+  // Initialize from URL query param if present
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const lessonId = params.get("lessonId");
+    if (lessonId && LESSONS.some((l) => l.id === lessonId)) {
+      setSelectedLessonId(lessonId);
+    }
+  }, []);
+
+  const currentLesson =
+    LESSONS.find((l) => l.id === selectedLessonId) || LESSONS[0];
+  const QUIZ_SEGMENTS = currentLesson.quizSegments;
 
   const currentSegment = QUIZ_SEGMENTS[currentIndex];
   const progress = (currentIndex / QUIZ_SEGMENTS.length) * 100;
@@ -78,12 +93,12 @@ export default function QuizPage() {
     if (currentIndex < QUIZ_SEGMENTS.length - 1) {
       goToPage(currentIndex + 1);
     } else {
-      router.push("/special-lesson/summary");
+      router.push(`/special-lesson/summary?lessonId=${selectedLessonId}`);
     }
   };
 
   const handleSkip = () => {
-    router.push("/special-lesson/summary");
+    router.push(`/special-lesson/summary?lessonId=${selectedLessonId}`);
   };
 
   const getPageNumbers = (current: number, total: number) => {
@@ -97,17 +112,35 @@ export default function QuizPage() {
   return (
     <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center">
       <div className="w-full max-w-4xl space-y-8">
-        <div className="text-center space-y-2">
+        <div className="text-center space-y-4">
           <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
             <span className="bg-gradient-to-r from-primary to-chart-1 text-transparent bg-clip-text">
-              Dual Imperative
+              {currentLesson.title}
             </span>{" "}
             Challenge
           </h1>
           <p className="text-lg text-muted-foreground">
-            Master the corporate ecosystem vocabulary through sentence
-            reconstruction.
+            {currentLesson.description}
           </p>
+
+          <div className="flex flex-wrap justify-center gap-2">
+            {LESSONS.map((lesson) => (
+              <Button
+                key={lesson.id}
+                variant={selectedLessonId === lesson.id ? "default" : "outline"}
+                size="sm"
+                onClick={() => {
+                  setSelectedLessonId(lesson.id);
+                  setCurrentIndex(0);
+                  setUserInput("");
+                  setFeedback(null);
+                  setShowHint(false);
+                }}
+              >
+                {lesson.title}
+              </Button>
+            ))}
+          </div>
         </div>
 
         <Card className="border-border shadow-2xl bg-card/50 backdrop-blur-sm overflow-hidden ring-1 ring-border">

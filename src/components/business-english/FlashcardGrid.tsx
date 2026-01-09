@@ -1,9 +1,8 @@
+"use client";
 
-'use client';
-
-import { BusinessEnglishWord } from '@/types/BusinessEnglish.Type';
-import Flashcard from './Flashcard';
-import { Skeleton } from '@/components/ui/skeleton';
+import { BusinessEnglishWord } from "@/types/BusinessEnglish.Type";
+import Flashcard from "./Flashcard";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface FlashcardGridProps {
   words: BusinessEnglishWord[];
@@ -11,9 +10,17 @@ interface FlashcardGridProps {
   error: string | null;
   onEdit: (word: BusinessEnglishWord) => void;
   onDelete: (wordId: string) => void;
+  isReverseMode: boolean;
 }
 
-const FlashcardGrid = ({ words, isLoading, error, onEdit, onDelete }: FlashcardGridProps) => {
+const FlashcardGrid = ({
+  words,
+  isLoading,
+  error,
+  onEdit,
+  onDelete,
+  isReverseMode,
+}: FlashcardGridProps) => {
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -35,7 +42,13 @@ const FlashcardGrid = ({ words, isLoading, error, onEdit, onDelete }: FlashcardG
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {words.map((word) => (
-        <Flashcard key={word.id} word={word} onEdit={onEdit} onDelete={onDelete} />
+        <Flashcard
+          key={word.id}
+          word={word}
+          onEdit={onEdit}
+          onDelete={onDelete}
+          isReverseMode={isReverseMode}
+        />
       ))}
     </div>
   );
