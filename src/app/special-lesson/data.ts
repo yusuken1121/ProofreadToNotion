@@ -545,7 +545,142 @@ In the meantime, I will focus on the remaining backlog items to ensure we stay o
   ],
 };
 
-export const LESSONS: Lesson[] = [LESSON_1, LESSON_2];
+const LESSON_3: Lesson = {
+  id: "june-release-feasibility",
+  title: "June Release Feasibility",
+  description:
+    "Evaluating the viability of the June release through effort estimation and go/no-go decision-making.",
+  summarySections: [
+    {
+      id: "project-title",
+      title: "Project Title",
+      content: `**Preliminary Estimation and Go/No-Go Decision for the June Release**
+（6月リリースに向けた概算見積もりとリリース可否の最終判断）`,
+    },
+    {
+      id: "english-text",
+      title: "Comprehensive Text (English)",
+      content: `**Objective**
+
+The primary objective of this task is to evaluate the viability of the June release. By performing a preliminary estimation of the items outlined in the prior phase, we aim to make a definitive go/no-go decision. This process will enable us to solidify a realistic release schedule and recalibrate the product roadmap as appropriate.
+
+**Acceptance Criteria**
+
+**Quantification of Effort:** A high-level calculation of story points or required man-hours must be documented for each task derived from the previous investigation.
+
+**Feasibility Confirmation:** A formal conclusion must be reached regarding the realism of the June release, in light of the estimation results.
+
+**Roadmap Alignment (Optional):** The product roadmap is updated to reflect the insights gained from this scoping and estimation exercise.`,
+    },
+    {
+      id: "japanese-text",
+      title: "Japanese Source (Original)",
+      content: `**背景・目的**
+
+6月のリリースに間に合うかどうかの実現性を精査するために、前段のチケットで洗い出されたタスクのポイント概算見積もりを行い、リリースの可否を最終判断したい。これにより現実的なリリース計画を確定させ、必要に応じてロードマップの見直しを行うことができる。
+
+**受け入れ条件**
+
+**工数の定量化：** 前段のタスクでまとめられた各作業に対して、概算のストーリーポイントまたは必要な工数が算出されまとめられていること。
+
+**実現性の確認：** その見積もり結果をもとに、6月のリリースが現実的かどうか判断がされていること。
+
+**ロードマップの整合（オプショナル）：** 今回のタスク洗い出しから算出した見積もりの結果を反映して、プロダクトのロードマップが更新されていること。`,
+    },
+    {
+      id: "essential-phrases",
+      title: "Essential Phrases & Usage Examples",
+      content: `1. **Evaluate the viability of...** （〜の実現性・実行可能性を評価する）
+* feasibility の一歩上の表現。「単に可能か」だけでなく「（ビジネス的に）うまくいくか」というニュアンスを含みます。
+* *Example:* We need to evaluate the viability of the June release before committing to the schedule.
+
+2. **Make a definitive go/no-go decision** （最終的な可否判断を下す）
+* 会議の目的として非常に使いやすいフレーズ。決定に迷いがない、という強さがあります。
+* *Example:* The steering committee will make a definitive go/no-go decision by end of week.
+
+3. **Outlined in the prior phase** （前段階で（概要が）示された）
+* previous よりも prior を使うことで、よりフォーマルな文書の響きになります。
+* *Example:* All tasks outlined in the prior phase must be accounted for in the estimation.
+
+4. **Derived from the previous investigation** （先の調査から導き出された）
+* 事実やデータに基づいたタスクであることを強調できます。
+* *Example:* The effort estimates are derived from the previous investigation by the tech lead.
+
+5. **Solidify a realistic release schedule** （現実的なスケジュールを固める）
+* fix や decide よりも「（議論を経て）強固なものにする」というプロのニュアンスが出ます。
+* *Example:* This meeting is intended to solidify a realistic release schedule for Q2.
+
+6. **Recalibrate the roadmap as appropriate** （ロードマップを適切に再調整する）
+* Recalibrate は、状況の変化に合わせて精密に調整し直す際に使われる非常に知的な表現。
+* *Example:* Should the estimates exceed our capacity, we will recalibrate the roadmap as appropriate.
+
+7. **In light of [the results]** （〜を考慮して、〜に照らして）
+* Based on よりも文脈の繋がりがスムーズになり、レポート等で多用されます。
+* *Example:* In light of the estimation results, a June release appears feasible.
+
+8. **Reflect the insights gained from...** （〜から得られた知見を反映する）
+* 単なる Data ではなく「洞察（Insights）」という言葉を使うことで、作業の価値を高めます。
+* *Example:* The updated roadmap should reflect the insights gained from this scoping exercise.
+
+9. **Quantification of Effort** （工数の定量化）
+* 工数見積もりを項目名として書く際、非常に収まりが良い表現です。
+* *Example:* The first deliverable is the quantification of effort for each backlog item.
+
+10. **Contingent upon their approval** （彼らの承認次第である）
+* プロジェクトの依存関係を説明する際の最強フレーズ。Lesson 2 でも登場しました。
+* *Example:* The release date is contingent upon the go/no-go decision from leadership.`,
+    },
+    {
+      id: "grammar-highlights",
+      title: "Grammar Highlights",
+      content: `1. **Infinitive of Purpose: "to + verb"**
+* *Example:* "...we aim **to make** a definitive go/no-go decision."
+* *Analysis:* 目的を表す不定詞。「〜するために」という意味で、ビジネス文書では "in order to" を省略したこの形が多用されます。
+
+2. **Future Conditional: "will enable us to..."**
+* *Example:* "This process will enable us **to solidify** a realistic release schedule..."
+* *Analysis:* 「このプロセスがあることで、私たちは〜することができるようになる」という因果関係を示します。enable + 目的語 + to不定詞 のパターンは提案書や仕様書の定番です。
+
+3. **Passive Voice for Formal Deliverables**
+* *Example:* "...must **be documented** for each task..."
+* *Analysis:* 受動態を使うことで「誰がやるか」よりも「何がなされなければならないか」に焦点を当てられます。受け入れ条件（Acceptance Criteria）の記述には特に効果的です。`,
+    },
+  ],
+  quizSegments: [
+    {
+      japanese:
+        "6月のリリースに間に合うかどうかの実現性を精査するために、前段のチケットで洗い出されたタスクのポイント概算見積もりを行い、リリースの可否を最終判断したい。",
+      english:
+        "The primary objective of this task is to evaluate the viability of the June release. By performing a preliminary estimation of the items outlined in the prior phase, we aim to make a definitive go/no-go decision.",
+    },
+    {
+      japanese:
+        "これにより現実的なリリース計画を確定させ、必要に応じてロードマップの見直しを行うことができる。",
+      english:
+        "This process will enable us to solidify a realistic release schedule and recalibrate the product roadmap as appropriate.",
+    },
+    {
+      japanese:
+        "前段のタスクでまとめられた各作業に対して、概算のストーリーポイントまたは必要な工数が算出されまとめられていること。",
+      english:
+        "A high-level calculation of story points or required man-hours must be documented for each task derived from the previous investigation.",
+    },
+    {
+      japanese:
+        "その見積もり結果をもとに、6月のリリースが現実的かどうか判断がされていること。",
+      english:
+        "A formal conclusion must be reached regarding the realism of the June release, in light of the estimation results.",
+    },
+    {
+      japanese:
+        "今回のタスク洗い出しから算出した見積もりの結果を反映して、プロダクトのロードマップが更新されていること。",
+      english:
+        "The product roadmap is updated to reflect the insights gained from this scoping and estimation exercise.",
+    },
+  ],
+};
+
+export const LESSONS: Lesson[] = [LESSON_1, LESSON_2, LESSON_3];
 
 export const FULL_MARKDOWN_CONTENT = "";
 export const QUIZ_SEGMENTS = LESSONS[0].quizSegments;
